@@ -16,6 +16,9 @@ def parks_detail(request, park_id):
     park = DogParks.objects.get(id=park_id)
     return render(request, 'parks/details.html', { 'park': park})
 
+def user_signup(request):
+    return render(request, 'registration/signup.html')
+
 def add_review(request, park_id):
     park= DogParks.objects.get(id=park_id)
     review_form = ReviewForm()
