@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+Add a review for {{park.name}}:
+
+<form action="{% url 'postreview' park.id %}" method="POST">
+    {% csrf_token %}
+
+    {{ review_form.as_p }}
+    <input type="submit" class="btn" value="Add Review">
+  </form>
+
+<script>
+
+
+    const selectEl = document.getElementById('id_rating'); 
+    M.FormSelect.init(selectEl);
+</script>
+
+{% endblock %}

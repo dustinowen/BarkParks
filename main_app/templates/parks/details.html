@@ -3,13 +3,23 @@
 
 
 <h1>&nbsp;&nbsp;<u>{{park.name}}</u></h1>
-<h3>&nbsp;&nbsp;Open {{park.hours}}</h3>
+&nbsp;&nbsp;Open {{park.hours}}
+<a href="{% url 'addreview' park.id %}">Add A Review</a>
+
 <hr>
 
 &nbsp;&nbsp;&nbsp;&nbsp;**ADD MAP HERE FOR ADDRESS: {{park.address}}
 <hr>
 
-&nbsp;&nbsp;&nbsp;&nbsp;**ADD PARK REVIEWS HERE...
+&nbsp;&nbsp;&nbsp;&nbsp; <h2><u>**REVIEWS START HERE...</u></h2>
 <hr>
+{% for review in park.review_set.all %}
+<hr>
+Date: {{ review.date}}
+Rating: {{ review.rating }}
+Review: {{review.review }}
+<hr>
+{% endfor %}
+
 
 {% endblock %}
