@@ -15,6 +15,7 @@ In development...
 * Link to site (coming soon)
 * <a href="https://trello.com/b/3QipEbGc/p4-planning">Trello Board Planning</a>
 
+
 ### Next Steps (Icebox Features):
 * Ability for users to add dog parks not found in database
 * User 'check-in' feature for park visits

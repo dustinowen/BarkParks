@@ -25,6 +25,7 @@ def post_review(request, park_id):
     form = ReviewForm(request.POST)
     if form.is_valid():
         new_review = form.save(commit=False)
+        new_review.user = request.user
         new_review.park_id = park_id
         new_review.save()
     return redirect('park_details', park_id=park_id)
