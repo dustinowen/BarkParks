@@ -1,0 +1,10 @@
+from django.forms import ModelForm
+from .models import Review
+
+class ReviewForm(ModelForm):
+  class Meta:
+    model = Review
+    fields = ['date', 'rating', 'review']
+
+class UserForm(ModelForm):
+  pass
