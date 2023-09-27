@@ -22,9 +22,9 @@ a dog centric application:
 
 ### User Stories: As a user...
 * I want an app that shows me dog parks around me
+* I want an app that allows users to add parks if they are not found in the app
 * I want an app that keeps track of my saved parks and reviews I have written in my user profile
 * I want an app that allows users to leave reviews about the park, with an option to upload photos
-* I want an app that allows users to add parks if they are not found in the app
 
 ## *Icebox* User Stories: As a user...
 * I want an app that allows we to connect to other dog park visitors so we can plan meet ups for our pups
