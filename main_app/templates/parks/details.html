@@ -13,7 +13,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; <h2><u>**REVIEWS START HERE...</u></h2>
 <hr>
-{% for review in park.review_set.all %}
+{% for review in park.reviews_set.all %}
 <hr>
 Date: {{ review.date}}
 Rating: {{ review.rating }}
@@ -33,7 +33,7 @@ Log in to leave a review!
 
 &nbsp;&nbsp;&nbsp;&nbsp; <h2><u>**REVIEWS START HERE...</u></h2>
 <hr>
-{% for review in park.review_set.all %}
+{% for review in park.reviews_set.all %}
 <hr>
 Date: {{ review.date}}
 Rating: {{ review.rating }}
