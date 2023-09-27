@@ -22,6 +22,10 @@
     />
   </head>
   <body>
+
+
+
+
     <header class="navbar-fixed">
       <nav>
         <div class="nav-wrapper #78909c blue-grey lighten-1">
@@ -31,10 +35,25 @@
                 >&nbsp;&nbsp;Bark Parks 🐾🐶🐾</a>
             </li>
           </ul>
-          <ul class="right">
-            <li><a href="{% url 'parksindex' %}">All Parks</a></li>
-            <li><a href="{% url 'favorites' %}">Saved Parks</a></li>
-            <li><a href="{% url 'user_profile' %}">User Profile</a></li>
+
+
+            {% if user.is_authenticated %}
+
+            <ul class="right">
+              <li><a href="{% url 'parksindex' %}">All Parks</a></li>
+              <li><a href="{% url 'favorites' %}">Saved Parks</a></li>
+              <li><a href="{% url 'user_profile' %}">User Profile</a></li>
+              <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+              
+              
+              
+              {% else %}
+              <ul class="right">
+              <li><a href="{% url 'parksindex' %}">All Parks</a></li>
+            <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+        
+            {% endif %}
+
             </ul>
         </div>
       </nav>

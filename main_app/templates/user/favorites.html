@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
+
+{% if user.is_authenticated %}
 <h3>{{user.get_username}}'s Favorite Parks</h3>
+
+*** DISPLAY FAVORITES HERE (in progress)
+
+{% else %}
+
+<h3>Log in to see your saved parks!</h3>
+
+{% endif %}
 
 {% endblock %}

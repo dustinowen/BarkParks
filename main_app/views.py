@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import DogParks
 from .forms import ReviewForm
 
@@ -34,6 +35,6 @@ def map(request):
 def favorites(request):
     return render(request, 'user/favorites.html')
 
-
+@login_required
 def user_profile(request):
     return render(request, 'user/profile.html')

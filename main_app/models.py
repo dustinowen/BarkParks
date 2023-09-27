@@ -8,7 +8,6 @@ RATINGS = (
     (1, '1-Star'),
 )
 
-# Create your models here.
 class DogParks(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
@@ -28,4 +27,8 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.get_rating_display()} on {self.date}"
+    
+    class Meta:
+        ordering = ['-date']
+
 

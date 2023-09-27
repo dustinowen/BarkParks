@@ -5,3 +5,6 @@ class ReviewForm(ModelForm):
   class Meta:
     model = Review
     fields = ['date', 'rating', 'review']
+
+class UserForm(ModelForm):
+  pass
