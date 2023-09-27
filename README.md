@@ -1,6 +1,6 @@
 # Bark Parks 🐾 🐶 🐾
 
-Application for pet parents looking for local dog parks, either in their hometown or while traveling. Application includes user posted reviews and photos to help other users determine what park/location is best fit for their (and their pets') needs. 
+Application for pet parents looking for dog parks, either in their hometown or while traveling. Application includes user posted reviews and photos to help other users determine what park/location is best fit for their (and their pets') needs. 
 
 ## Screenshots:
 In development...
@@ -14,6 +14,7 @@ In development...
 ## Getting Started:
 * Link to site (coming soon)
 * <a href="https://trello.com/b/3QipEbGc/p4-planning">Trello Board Planning</a>
+
 
 ### Next Steps (Icebox Features):
 * Ability for users to add dog parks not found in database

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 RATINGS = (
     (5, '5-Stars'),
@@ -16,7 +17,7 @@ class DogParks(models.Model):
     def __str__(self):
         return self.name
     
-class Review(models.Model):
+class Reviews(models.Model):
     date = models.DateField('Review Date')
     rating = models.IntegerField('User Rating',
         choices=RATINGS, 
@@ -24,6 +25,7 @@ class Review(models.Model):
     )
     review = models.TextField(max_length=500, blank=True)
     park = models.ForeignKey(DogParks, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.get_rating_display()} on {self.date}"
