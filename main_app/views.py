@@ -14,6 +14,9 @@ def parks_detail(request, park_id):
     park = DogParks.objects.get(id=park_id)
     return render(request, 'parks/details.html', { 'park': park })
 
+def map(request):
+    return render(request, 'map/index.html')
+
 def favorites(request):
     return render(request, 'user/favorites.html')
 
