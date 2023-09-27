@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'BarkParks.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'barkparks',
+        'NAME': 'bark_park_app',
     }
 }
 
