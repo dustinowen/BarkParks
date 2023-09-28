@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 RATINGS = (
     (5, '5-Stars'),
@@ -32,5 +33,4 @@ class Reviews(models.Model):
     
     class Meta:
         ordering = ['-date']
-
 
