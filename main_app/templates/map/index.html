@@ -50,6 +50,7 @@
       clearButton.type = "button"
       clearButton.value = "Clear"
       clearButton.classList.add("button", "button-secondary")
+
       response = document.createElement("pre")
       response.id = "response"
       response.innerText = ""
@@ -86,7 +87,9 @@
 
     function geocode(request) {
       clear();
-      geocoder.geocode(request)
+
+      geocoder
+        .geocode(request)
         .then((result) => {
           const { results } = result;
 
