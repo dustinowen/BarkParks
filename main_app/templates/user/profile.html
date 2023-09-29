@@ -1,14 +1,17 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1>Hello {{ user.get_username }}!</h1>
 
 {% for review in user.reviews_set.all %}
-<hr>
-Date: {{ review.date}}
-Rating: {{ review.rating }}
-Review: {{review.review }}
-<hr>
-{% endfor %}
+<div class="card" style="width: 40rem; margin-bottom: 1rem">
+  <div class="card-body">
+    <h5 class="card-title">Star Rating: {{ review.rating }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ review.date }}</h6>
+    <p class="card-text">
+      <strong>Your Review:</strong>&nbsp; {{ review.review}}
+    </p>
+  </div>
+</div>
+{% endfor %} 
 
 {% endblock %}

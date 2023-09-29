@@ -1,46 +1,73 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %} {% if user.is_authenticated %}
+<br />
+<h1>
+  &nbsp;&nbsp;<u>{{park.name}}</u>
 
-{% if user.is_authenticated %}
-<h3>&nbsp;&nbsp;<u>{{park.name}}</u></h3>
-&nbsp;&nbsp;Open {{park.hours}}<br>
-<a href="{% url 'addreview' park.id %}">Add A Review</a>
+  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">
+    <a href="{% url 'addreview' park.id %}">Add A Review</a>
+  </button>
+</h1>
+&nbsp;&nbsp;Open {{park.hours}}
+<p></p>
+<p></p>
 
-<hr>
+<hr />
 
 &nbsp;&nbsp;&nbsp;&nbsp;**ADD MAP HERE FOR ADDRESS: {{park.address}}
-<hr>
+<hr />
 
-&nbsp;&nbsp;&nbsp;&nbsp; <h2><u>**REVIEWS START HERE...</u></h2>
-<hr>
-{% for review in park.reviews_set.all %}
+&nbsp;&nbsp;&nbsp;&nbsp;
+<h4><u>** REVIEWS START HERE...(temporary text)</u></h4>
+<hr />
+<!-- {% for review in park.reviews_set.all %}
 <hr>
 Date: {{ review.date}}
 Rating: {{ review.rating }}
 Review: {{review.review }}
 <hr>
-{% endfor %}
+{% endfor %} -->
 
-{% else %}
-<h3>&nbsp;&nbsp;<u>{{park.name}}</u></h3>
-&nbsp;&nbsp;Open {{park.hours}}<br>
-Log in to leave a review!
+{% for review in park.reviews_set.all %}
+<div class="card" style="width: 40rem; margin-bottom: 1rem">
+  <div class="card-body">
+    <h5 class="card-title">Star Rating: {{ review.rating }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ review.date }}</h6>
+    <p class="card-text">
+      <strong>{{ review.user }} said:</strong>&nbsp; {{ review.review}}
+    </p>
+  </div>
+</div>
+{% endfor %} {% else %}
+<br />
+<h1>
+  &nbsp;&nbsp;<u>{{park.name}}</u>
 
-<hr>
+  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">
+    <a href="{% url 'login' %}?next={{ request.path }}"
+      >Log in to leave a review!</a
+    >
+  </button>
+</h1>
+&nbsp;&nbsp;Open {{park.hours}}
+<p></p>
+<p></p>
+
+<hr />
 
 &nbsp;&nbsp;&nbsp;&nbsp;**ADD MAP HERE FOR ADDRESS: {{park.address}}
-<hr>
+<hr />
 
-&nbsp;&nbsp;&nbsp;&nbsp; <h2><u>**REVIEWS START HERE...</u></h2>
-<hr>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<h2><u>**REVIEWS START HERE...</u></h2>
+<hr />
 {% for review in park.reviews_set.all %}
-<hr>
-Date: {{ review.date}}
-Rating: {{ review.rating }}
-Review: {{review.review }}
-<hr>
-{% endfor %}
-
-{% endif %}
-
-{% endblock %}
+<div class="card" style="width: 40rem; margin-bottom: 1rem">
+  <div class="card-body">
+    <h5 class="card-title">Star Rating: {{ review.rating }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ review.date }}</h6>
+    <p class="card-text">
+      <strong>{{ review.user }} said:</strong>&nbsp; {{ review.review}}
+    </p>
+  </div>
+</div>
+{% endfor %} {% endif %} {% endblock %}

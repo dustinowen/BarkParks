@@ -1,10 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<h3>map testing</h3>
-
-
-<h3>My Google Maps Demo</h3>
-
+<h1>map testing page</h1>
 
 
   <style>
@@ -50,6 +46,7 @@
       clearButton.type = "button"
       clearButton.value = "Clear"
       clearButton.classList.add("button", "button-secondary")
+
       response = document.createElement("pre")
       response.id = "response"
       response.innerText = ""
@@ -86,7 +83,9 @@
 
     function geocode(request) {
       clear();
-      geocoder.geocode(request)
+
+      geocoder
+        .geocode(request)
         .then((result) => {
           const { results } = result;
 
@@ -111,14 +110,14 @@
     async defer></script>
 
 
+    <div id="map"></div>
+    <br>
     <div id="controls-container">
       <input id="inputText" type="text" placeholder="Enter a location">
       <input id="submitButton" type="button" value="Geocode" class="button button-primary">
       <input id="clearButton" type="button" value="Clear" class="button button-secondary">
     </div>
     
-    <div id="map"></div>
-
 
 
 
