@@ -1,27 +1,36 @@
 {% extends 'base.html' %} {% block content %}
+<style>
+  .picture-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+  .picture-grid img {
+    width: 100%;
+    height: auto; 
+    border-radius: 8px; 
+  }
+</style>
+{% if user.is_authenticated %}
+<h1>
+&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">Upload your photos HERE</button>
+</h1>
 
-<h3>Upload photos...</h3>
+{% else %}
+<h1>
+&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary"><a href="{% url 'login' %}?next={{ request.path }}">Log in to post your photos!</a></button>
+</h1>
+{% endif %}
 
+
+<div class="picture-grid">
 {% for image in park.pictures_set.all %}
-  <a href="{{ image.image.url }}">
-    <img src="{{ image.image.url }}" width="20%" />
-  </a>
-  {% endfor %}
-
-
-{% endblock %}
-
-
-
-<!--
-
-    <div class="picture-grid">
-  {% for image in park.pictures_set.all %}
-  <a href="{{ image.image.url }}">
-    <img src="{{ image.image.url }}" width="20%" />
-  </a>
-  {% endfor %}
+<a href="{{ image.image.url }}">
+  <img src="{{ image.image.url }}" />
+</a>
+{% endfor %}
 </div>
 
-
--->
+{% endblock %}

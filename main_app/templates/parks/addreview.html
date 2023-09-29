@@ -1,23 +1,186 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+
+<style>
+  .form-control {
+    height: 40px;
+    box-shadow: none;
+    color: #969fa4;
+  }
+  .form-control-2 {
+    height:200px;
+    box-shadow: none;
+    color: #969fa4;
+  }
+  .form-control:focus {
+    border-color: #5cb85c;
+  }
+  .form-control,
+  .btn {
+    border-radius: 3px;
+  }
+  .signup-form {
+    width: 400px;
+    margin: 0 auto;
+    padding: 30px 0;
+  }
+  .signup-form h2 {
+    color: #636363;
+    margin: 0 0 15px;
+    position: relative;
+    text-align: center;
+  }
+  .signup-form h2:before,
+  .signup-form h2:after {
+    content: "";
+    height: 2px;
+    width: 15%;
+    background: #d4d4d4;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+  }
+  .signup-form h2:before {
+    left: 0;
+  }
+  .signup-form h2:after {
+    right: 0;
+  }
+  .signup-form .hint-text {
+    color: #999;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .signup-form form {
+    color: #999;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    background: #f2f3f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+  }
+  .signup-form .form-group {
+    margin-bottom: 20px;
+  }
+  .signup-form input[type="checkbox"] {
+    margin-top: 3px;
+  }
+  .signup-form .btn {
+    margin-top: 30px;
+    margin-left: 110px;
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 140px;
+    border-radius: 10px;
+    outline: none !important;
+  }
+  .signup-form .row div:first-child {
+    padding-right: 10px;
+  }
+  .signup-form .row div:last-child {
+    padding-left: 10px;
+  }
+  .signup-form a {
+    color: #463a40;
+    text-decoration: underline;
+  }
+  .signup-form a:hover {
+    text-decoration: none;
+  }
+  .signup-form form a {
+    color: #5cb85c;
+    text-decoration: none;
+  }
+  .signup-form form a:hover {
+    text-decoration: underline;
+  }
+  .password-text {
+    color: #999;
+    margin-top: 30px;
+    text-align: center;
+    font-size: small;
+  }
+  img {
+    width: 300px;
+    margin-top: 10px;
+    border-radius: 10px;
+    justify-self: center;
+  }
+</style>
+
 
 {% if user.is_authenticated %}
 
-Add a review for {{park.name}}:
+<i class="fa-solid fa-list pe-2"></i>
 
-<form action="{% url 'postreview' park.id %}" method="POST">
+
+<div class="signup-form">
+  <form action="{% url 'postreview' park.id %}" method="POST">
     {% csrf_token %}
+    <h2>Add A Review</h2>
+    <p class="hint-text">
+      Leave your view for {{ park.name }}...
+      <img src="{% static 'imgs/join.jpg' %}" />
+    </p>
 
-    {{ review_form.as_p }}
-    <input type="submit" class="btn" value="Add Review">
+    <div class="form-group">
+      Date:
+      <input
+        type="date"
+        name="date"
+        maxlength="10"
+        autocapitalize="none"
+        autocomplete="username"
+        autofocus=""
+        required
+        id="id_date"
+        class="form-control"
+        placeholder="Review Date"
+      />
+    </div>
+
+    <div class="form-group">
+      Select Rating:
+      <select
+        name="rating"
+        required
+        id="id_rating"
+        class="form-control"
+        placeholder="Password"
+      >
+      <option value="5" selected>5-Stars</option>
+      <option value="4">4-Stars</option>
+      <option value="3">3-Stars</option>
+      <option value="2">2-Stars</option>
+      <option value="1">1-Star</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      What did you think?
+      <textarea
+        name="review"
+        required
+        id="id_review"
+        class="form-control"
+        maxlength="500">
+      </textarea>
+    </div>
+
+    <div class="form-group">
+      <button
+        type="submit"
+        class="btn btn-info btn-lg btn-block"
+        value="Add Review"
+      >
+        Post
+      </button>
+
+    </div>
   </form>
+</div>
 
-<script>
-
-
-    const selectEl = document.getElementById('id_rating'); 
-    M.FormSelect.init(selectEl);
-</script>
 
 {% else %}
 
@@ -32,5 +195,6 @@ Add a review for {{park.name}}:
 </h1>
 
 {% endif %}
+
 
 {% endblock %}

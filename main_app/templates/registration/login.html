@@ -107,7 +107,7 @@
 </style>
 
 <div class="login-form">
-  <form action="{% url 'user_login' %}" class="" method="POST">
+  <form action="{% url 'user_login' %}?next={{ request.path }}" class="" method="POST">
     {% csrf_token %}
 
     <h2>Let's Play!</h2>

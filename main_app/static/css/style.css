@@ -38,7 +38,7 @@ li {
 }
 
 #sidebar {
-    max-width: 264px;
+    max-width: 364px;
     min-width: 264px;
     transition: all 0.35s ease-in-out;
     box-shadow: 0 0 35px 0 rgba(49, 57, 66, 0.5);
@@ -79,10 +79,15 @@ a.sidebar-link {
     color: #000000;
     position: relative;
     display: block;
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
-.sidebar-link[data-bs-toggle="collapse"]::after {
+a.sidebar-link:hover {
+    font-size: 1.75rem;
+    color: #636363;
+}
+
+/* .sidebar-link[data-bs-toggle="collapse"]::after {
     border: solid;
     border-width: 0 .075rem .075rem 0;
     content: "";
@@ -98,7 +103,7 @@ a.sidebar-link {
 .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
     transition: all .2s ease-out;
-}
+} */
 
 .content {
     flex: 1;
