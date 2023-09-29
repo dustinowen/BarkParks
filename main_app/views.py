@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from .models import DogParks
 from .forms import ReviewForm
 
@@ -17,7 +19,15 @@ def parks_detail(request, park_id):
     return render(request, 'parks/details.html', { 'park': park})
 
 def user_signup(request):
-    return render(request, 'registration/signup.html')
+    if request.method =='POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')
+    else:
+        form = UserCreationForm
+    return render(request, 'registration/signup.html', {'form': form})
 
 def add_review(request, park_id):
     park= DogParks.objects.get(id=park_id)
