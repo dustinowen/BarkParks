@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime, date
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 
@@ -34,3 +35,12 @@ class Reviews(models.Model):
     class Meta:
         ordering = ['-date']
 
+class Pictures(models.Model):
+    image = models.ImageField(upload_to='park_images/')
+    date =models.DateField()
+    description = models.CharField(max_length=100)
+
+    park = models.ForeignKey(DogParks, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.description

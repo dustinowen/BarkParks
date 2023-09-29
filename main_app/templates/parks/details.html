@@ -1,64 +1,19 @@
 {% extends 'base.html' %} {% block content %} {% if user.is_authenticated %}
-<br />
+
+
+
 <h1>
   &nbsp;&nbsp;<u>{{park.name}}</u>
-
-  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">
-    <a href="{% url 'addreview' park.id %}">Add A Review</a>
-  </button>
+  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary"><a href="{% url 'addreview' park.id %}">Add A Review</a></button>
 </h1>
-&nbsp;&nbsp;Open {{park.hours}}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
 <p></p>
 <p></p>
 
-<hr />
+<a href="{% url 'park_pictures' park.id %}">&nbsp;&nbsp;&nbsp;&nbsp;📸 View & Share photos from your visit to {{ park.name }} 📸</a>
 
-&nbsp;&nbsp;&nbsp;&nbsp;**ADD MAP HERE FOR ADDRESS: {{park.address}}
-<hr />
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-<h4><u>** REVIEWS START HERE...(temporary text)</u></h4>
-<hr />
-<!-- {% for review in park.reviews_set.all %}
-<hr>
-Date: {{ review.date}}
-Rating: {{ review.rating }}
-Review: {{review.review }}
-<hr>
-{% endfor %} -->
-
-{% for review in park.reviews_set.all %}
-<div class="card" style="width: 40rem; margin-bottom: 1rem">
-  <div class="card-body">
-    <h5 class="card-title">Star Rating: {{ review.rating }}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">{{ review.date }}</h6>
-    <p class="card-text">
-      <strong>{{ review.user }} said:</strong>&nbsp; {{ review.review}}
-    </p>
-  </div>
-</div>
-{% endfor %} {% else %}
-<br />
-<h1>
-  &nbsp;&nbsp;<u>{{park.name}}</u>
-
-  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">
-    <a href="{% url 'login' %}?next={{ request.path }}"
-      >Log in to leave a review!</a
-    >
-  </button>
-</h1>
-&nbsp;&nbsp;Open {{park.hours}}
-<p></p>
-<p></p>
-
-<hr />
-
-&nbsp;&nbsp;&nbsp;&nbsp;**ADD MAP HERE FOR ADDRESS: {{park.address}}
-<hr />
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-<h2><u>**REVIEWS START HERE...</u></h2>
+<hr />&nbsp;&nbsp;&nbsp;&nbsp;
+<h4>What other users have to say about {{ park.name }}:</h4>
 <hr />
 {% for review in park.reviews_set.all %}
 <div class="card" style="width: 40rem; margin-bottom: 1rem">
@@ -70,4 +25,37 @@ Review: {{review.review }}
     </p>
   </div>
 </div>
-{% endfor %} {% endif %} {% endblock %}
+
+{% endfor %} 
+
+
+{% else %}
+<br />
+<h1>
+  &nbsp;&nbsp;<u>{{park.name}}</u>
+  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary"><a href="{% url 'login' %}?next={{ request.path }}">Log in to leave a review!</a></button>
+</h1>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
+<p></p>
+<p></p>
+
+<a href="{% url 'park_pictures' park.id %}">&nbsp;&nbsp;&nbsp;&nbsp;📸 View photos shared by our users of {{ park.name }} 📸</a>
+
+<hr />&nbsp;&nbsp;&nbsp;&nbsp;
+<h4>What other users have to say about {{ park.name }}:</h4>
+<hr />
+{% for review in park.reviews_set.all %}
+<div class="card" style="width: 40rem; margin-bottom: 1rem">
+  <div class="card-body">
+    <h5 class="card-title">Star Rating: {{ review.rating }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ review.date }}</h6>
+    <p class="card-text">
+      <strong>{{ review.user }} said:</strong>&nbsp; {{ review.review}}
+    </p>
+  </div>
+</div>
+{% endfor %} 
+{% endif %} 
+
+{% endblock %}

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% if user.is_authenticated %}
+
 Add a review for {{park.name}}:
 
 <form action="{% url 'postreview' park.id %}" method="POST">
@@ -16,5 +18,19 @@ Add a review for {{park.name}}:
     const selectEl = document.getElementById('id_rating'); 
     M.FormSelect.init(selectEl);
 </script>
+
+{% else %}
+
+<h1>
+  &nbsp;&nbsp;<u>{{park.name}}</u>
+
+  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">
+    <a href="{% url 'login' %}?next={{ request.path }}"
+      >Log in to leave a review!</a
+    >
+  </button>
+</h1>
+
+{% endif %}
 
 {% endblock %}

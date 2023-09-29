@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3>Upload photos...</h3>
+
+{% for image in park.pictures_set.all %}
+  <a href="{{ image.image.url }}">
+    <img src="{{ image.image.url }}" width="20%" />
+  </a>
+  {% endfor %}
+
+
+{% endblock %}
+
+
+
+<!--
+
+    <div class="picture-grid">
+  {% for image in park.pictures_set.all %}
+  <a href="{{ image.image.url }}">
+    <img src="{{ image.image.url }}" width="20%" />
+  </a>
+  {% endfor %}
+</div>
+
+
+-->
