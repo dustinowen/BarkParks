@@ -1,8 +1,28 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-<h2>
-  ** re-designing home page<br />
-  ** content to come
-</h2>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .container img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<div class="container">
+    <img src="{% static 'imgs/park.jpg' %}" />
+</div>
+
 
 {% endblock %}

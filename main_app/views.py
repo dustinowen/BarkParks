@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
-from .models import DogParks, Reviews
+from .models import DogParks, Reviews, Pictures
 from .forms import ReviewForm, ImageForm
 
 def home(request):
@@ -63,6 +63,11 @@ def post_review(request, park_id):
 def delete_review(request, id):
     review = Reviews.objects.get(id=id)
     review.delete()
+    return redirect('user_profile')
+
+def delete_picture(request, id):
+    picture = Pictures.objects.get(id=id)
+    picture.delete()
     return redirect('user_profile')
 
 def map(request):
