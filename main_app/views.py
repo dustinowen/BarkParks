@@ -73,3 +73,14 @@ def favorites(request):
 
 def user_profile(request):
     return render(request, 'user/profile.html')
+
+def upload_photo(request):
+    form = ImageForm(request.POST, request.FILES)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            return redirect('user_profile')
+        else:
+            form = ImageForm()
+    return render(request, 'parks/addpicture.html', {'form': form})

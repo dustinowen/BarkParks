@@ -27,5 +27,7 @@ urlpatterns = [
     path('user/favorites/', views.favorites, name='favorites'),
 
     path('map/', views.map, name='map'),
+
+    path('upload/', views.upload_photo, name='uploadphoto')
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
