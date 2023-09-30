@@ -1,46 +1,89 @@
-{% extends 'base.html' %}
-{% block content %}
-
+{% extends 'base.html' %} {% block content %}
+<style>
+  a {
+    color: rgb(183, 95, 60);
+  }
+</style>
 {% if user.is_authenticated %}
-<h3>&nbsp;&nbsp;<u>{{park.name}}</u></h3>
-&nbsp;&nbsp;Open {{park.hours}}<br>
-<a href="{% url 'addreview' park.id %}">Add A Review</a>
+<br />
+<h1>
+  &nbsp;&nbsp;<u>{{park.name}}</u> &nbsp;&nbsp;<button
+    type="button"
+    class="btn btn-outline-secondary"
+    style="margin-bottom: 1rem"
+  >
+    <a href="{% url 'addreview' park.id %}">Add A Review</a>
+  </button>
+  &nbsp;&nbsp;<button
+    type="button"
+    class="btn btn-outline-secondary"
+    style="margin-bottom: 1rem"
+  >
+    <a href="{% url 'addphoto' park.id %}">Add A Photo</a>
+  </button>
+</h1>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
+<p></p>
+<i class="fa-solid fa-list pe-2"></i>
 
-<hr>
+<i class="fa-solid fa-list pe-2"></i>
+<a href="{% url 'park_pictures' park.id %}"
+  >&nbsp;📸 View photos shared by our users of {{ park.name }} 📸</a
+>
+<p></p>
+<hr />
 
-&nbsp;&nbsp;&nbsp;&nbsp;**ADD MAP HERE FOR ADDRESS: {{park.address}}
-<hr>
+<h5>&nbsp;&nbsp;&nbsp;&nbsp;What users have to say about {{ park.name }}:</h5>
+<i class="fa-solid fa-list pe-2"></i>
 
-&nbsp;&nbsp;&nbsp;&nbsp; <h2><u>**REVIEWS START HERE...</u></h2>
-<hr>
 {% for review in park.reviews_set.all %}
-<hr>
-Date: {{ review.date}}
-Rating: {{ review.rating }}
-Review: {{review.review }}
-<hr>
-{% endfor %}
+<div class="card" style="width: 40rem; margin-bottom: 1rem; margin-left: 1rem">
+  <div class="card-body">
+    <h5 class="card-title">Rating: {{ review.rating }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ review.date }}</h6>
+    <p class="card-text">
+      <strong>{{ review.user }} said:</strong>&nbsp; <span style="font-style: italic;" >{{ review.review}}</span>
+    </p>
+  </div>
+</div>
 
-{% else %}
-<h3>&nbsp;&nbsp;<u>{{park.name}}</u></h3>
-&nbsp;&nbsp;Open {{park.hours}}<br>
-Log in to leave a review!
+{% endfor %} {% else %}
 
-<hr>
+<br />
+<h1>
+  &nbsp;&nbsp;<u>{{park.name}}</u> &nbsp;&nbsp;<button
+    type="button"
+    class="btn btn-outline-secondary"
+    style="margin-bottom: 1rem"
+  >
+    <a href="{% url 'login' %}?next={{ request.path }}"
+      >Log in to leave a review and post photos!</a
+    >
+  </button>
+</h1>
 
-&nbsp;&nbsp;&nbsp;&nbsp;**ADD MAP HERE FOR ADDRESS: {{park.address}}
-<hr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
+<p></p>
+<i class="fa-solid fa-list pe-2"></i>
 
-&nbsp;&nbsp;&nbsp;&nbsp; <h2><u>**REVIEWS START HERE...</u></h2>
-<hr>
+<i class="fa-solid fa-list pe-2"></i>
+<a href="{% url 'park_pictures' park.id %}"
+  >&nbsp;📸 View photos shared by our users of {{ park.name }} 📸</a
+>
+<p></p>
+<hr />
+
+<h5>&nbsp;&nbsp;&nbsp;&nbsp;What users have to say about {{ park.name }}:</h5>
+<i class="fa-solid fa-list pe-2"></i>
+
 {% for review in park.reviews_set.all %}
-<hr>
-Date: {{ review.date}}
-Rating: {{ review.rating }}
-Review: {{review.review }}
-<hr>
-{% endfor %}
-
-{% endif %}
-
-{% endblock %}
+<div class="card" style="width: 40rem; margin-bottom: 1rem; margin-left: 1rem">
+  <div class="card-body">
+    <h5 class="card-title">Rating: {{ review.rating }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ review.date }}</h6>
+    <p class="card-text">
+      <strong>{{ review.user }} said:</strong>&nbsp; <span style="font-style: italic;" >{{ review.review}}</span>
+    </p>
+  </div>
+</div>
+{% endfor %} {% endif %} {% endblock %}

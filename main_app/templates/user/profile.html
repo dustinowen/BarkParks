@@ -1,14 +1,60 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
-<h1>Hello {{ user.get_username }}!</h1>
+<style>
+  .picture-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+  .picture-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  a {
+    color: rgb(46, 24, 191);
+  }
+</style>
 
+<div style="margin-top: 5rem; margin-bottom: 2rem; text-align: center">
+  <h1>Hello {{ user.get_username }}!</h1>
+  <hr />
+</div>
+<h3 style="text-align:center; margin-bottom: 1rem; color: gray">Reviews you have posted:</h3>
 {% for review in user.reviews_set.all %}
-<hr>
-Date: {{ review.date}}
-Rating: {{ review.rating }}
-Review: {{review.review }}
-<hr>
+<div class="card" style="width: 40rem; margin-left: auto; margin-right: auto; margin-bottom: 1rem">
+  <div class="card-body">
+    <h5 class="card-title">{{ review.park }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">
+      {{ review.rating }} Star Rating on {{ review.date }}
+    </h6>
+    <p class="card-text">
+      <strong>Your Review:</strong>&nbsp; {{ review.review }}
+    </p>
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-outline-danger btn-sm">
+        <a href="{% url 'delete-review' id=review.id %}" class="delete-review"
+          >delete review</a
+        >
+      </button>
+    </div>
+  </div>
+</div>
 {% endfor %}
+<hr style="margin-top: 2rem; margin-bottom: 2rem;"/>
+
+<h3 style="text-align:center; margin-bottom: 1rem; color: gray">Photos you have shared:</h3>
+<div class="picture-grid" style="margin-left: auto">
+  {% for image in user.pictures_set.all %}
+  <a href="{{ image.image.url }}">
+    <img src="{{ image.image.url }}" />
+  </a>
+  <button type="button" class="btn btn-outline-danger btn-sm">
+  <a href="{% url 'delete-picture' id=image.id %}">delete photo</a>
+</button>
+  {% endfor %}
+</div>
 
 {% endblock %}

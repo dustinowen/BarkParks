@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+  .picture-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+  .picture-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  h1 {
+    text-align: center;
+  }
+  .return {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    color: rgb(96, 96, 134);
+  }
+</style>
+
+<h1>
+  <u>📸&nbsp;&nbsp;{{park.name}}&nbsp;&nbsp;📸</u>
+</h1>
+<br />
+
+<div class="picture-grid">
+  {% for image in park.pictures_set.all %}
+  <a href="{{ image.image.url }}">
+    <img src="{{ image.image.url }}" />
+  </a>
+  {% endfor %}
+</div>
+
+<p></p>
+<hr />
+<p></p>
+
+<a class="return" href="{% url 'park_details' park.id %}"
+  >⮐ Return to {{park.name}}</a
+>
+
+{% endblock %}
