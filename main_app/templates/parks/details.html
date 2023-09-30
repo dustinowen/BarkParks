@@ -5,6 +5,7 @@
 <h1>
   &nbsp;&nbsp;<u>{{park.name}}</u>
   &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary"><a href="{% url 'addreview' park.id %}">Add A Review</a></button>
+  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary"><a href="{% url 'addphoto' park.id %}">Add A Photo</a></button>
 </h1>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
 <p></p>

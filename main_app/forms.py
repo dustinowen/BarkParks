@@ -17,4 +17,4 @@ class UserCreationForm(ModelForm):
 class ImageForm(ModelForm):
     class Meta:
       model = Pictures
-      fields = '__all__'
+      fields = ['user', 'park', 'image', 'description', 'date' ]

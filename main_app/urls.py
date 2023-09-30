@@ -16,6 +16,8 @@ urlpatterns = [
 
     path('park/<int:park_id>/addreview/', views.add_review, name="addreview"),
 
+    path('parks/<int:park_id>/addphoto/', views.add_photo, name='addphoto'),
+
     path('park/<int:park_id>/postreview/', views.post_review, name="postreview"),
 
     path('user/', views.user_profile, name='user_profile'),
@@ -28,6 +30,8 @@ urlpatterns = [
 
     path('map/', views.map, name='map'),
 
-    path('upload/', views.upload_photo, name='uploadphoto')
+    path('upload/', views.upload_photo, name='uploadphoto'),
+
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

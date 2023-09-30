@@ -84,3 +84,22 @@ def upload_photo(request):
         else:
             form = ImageForm()
     return render(request, 'parks/addpicture.html', {'form': form})
+
+def add_photo(request, park_id):
+    park = DogParks.objects.get(id=park_id)
+    user = request.user
+    form = ImageForm(request.POST, request.FILES)
+    if request.method == 'POST':
+        print(f"POST data: {request.POST}")
+        print(f"FILES data: {request.FILES}")
+        if form.is_valid():
+            form.instance.user = user
+            form.instance.park = park
+            form.save()
+            return redirect('user_profile')
+        else:
+            print("form is not valid")
+            print(form.errors)
+    else:
+        form = ImageForm()
+    return render(request, 'parks/addpicture.html', {'form': form, 'park': park})

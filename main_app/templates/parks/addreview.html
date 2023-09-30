@@ -20,19 +20,19 @@
   .btn {
     border-radius: 3px;
   }
-  .signup-form {
+  .review-form {
     width: 400px;
     margin: 0 auto;
     padding: 30px 0;
   }
-  .signup-form h2 {
+  .review-form h2 {
     color: #636363;
     margin: 0 0 15px;
     position: relative;
     text-align: center;
   }
-  .signup-form h2:before,
-  .signup-form h2:after {
+  .review-form h2:before,
+  .review-form h2:after {
     content: "";
     height: 2px;
     width: 15%;
@@ -41,18 +41,18 @@
     top: 50%;
     z-index: 2;
   }
-  .signup-form h2:before {
+  .review-form h2:before {
     left: 0;
   }
-  .signup-form h2:after {
+  .review-form h2:after {
     right: 0;
   }
-  .signup-form .hint-text {
+  .review-form .hint-text {
     color: #999;
     margin-bottom: 30px;
     text-align: center;
   }
-  .signup-form form {
+  .review-form form {
     color: #999;
     border-radius: 3px;
     margin-bottom: 15px;
@@ -60,13 +60,13 @@
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     padding: 30px;
   }
-  .signup-form .form-group {
+  .review-form .form-group {
     margin-bottom: 20px;
   }
-  .signup-form input[type="checkbox"] {
+  .review-form input[type="checkbox"] {
     margin-top: 3px;
   }
-  .signup-form .btn {
+  .review-form .btn {
     margin-top: 30px;
     margin-left: 110px;
     font-size: 16px;
@@ -75,24 +75,24 @@
     border-radius: 10px;
     outline: none !important;
   }
-  .signup-form .row div:first-child {
+  .review-form .row div:first-child {
     padding-right: 10px;
   }
-  .signup-form .row div:last-child {
+  .review-form .row div:last-child {
     padding-left: 10px;
   }
-  .signup-form a {
+  .review-form a {
     color: #463a40;
     text-decoration: underline;
   }
-  .signup-form a:hover {
+  .review-form a:hover {
     text-decoration: none;
   }
-  .signup-form form a {
+  .review-form form a {
     color: #5cb85c;
     text-decoration: none;
   }
-  .signup-form form a:hover {
+  .review-form form a:hover {
     text-decoration: underline;
   }
   .password-text {
@@ -115,12 +115,12 @@
 <i class="fa-solid fa-list pe-2"></i>
 
 
-<div class="signup-form">
+<div class="review-form">
   <form action="{% url 'postreview' park.id %}" method="POST">
     {% csrf_token %}
     <h2>Add A Review</h2>
     <p class="hint-text">
-      Leave your view for {{ park.name }}...
+      Leave your review for {{ park.name }}...
       <img src="{% static 'imgs/join.jpg' %}" />
     </p>
 
