@@ -1,6 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
-from .models import Reviews
+from .models import Reviews, Pictures
 from django.contrib.auth.models import User
 
 class ReviewForm(ModelForm):
@@ -13,3 +13,8 @@ class UserForm(ModelForm):
 
 class UserCreationForm(ModelForm):
   pass
+
+class ImageForm(ModelForm):
+    class Meta:
+      model = Pictures
+      fields = '__all__'

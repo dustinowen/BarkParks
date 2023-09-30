@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login
-from .models import DogParks
-from .forms import ReviewForm
-
+from .models import DogParks, Reviews
+from .forms import ReviewForm, ImageForm
 
 def home(request):
     return render(request, 'home.html')
@@ -39,7 +38,10 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('user_profile')
+            if 'next' in request.POST:
+                return redirect (request.POST.get('next'))
+            else:
+                return redirect('user_profile')
     else:
         form = AuthenticationForm()
     return render(request, 'registration/login.html', { 'form': form })
@@ -58,12 +60,16 @@ def post_review(request, park_id):
         new_review.save()
     return redirect('park_details', park_id=park_id)
 
+def delete_review(request, id):
+    review = Reviews.objects.get(id=id)
+    review.delete()
+    return redirect('user_profile')
+
 def map(request):
     return render(request, 'map/index.html')
 
 def favorites(request):
     return render(request, 'user/favorites.html')
 
-@login_required
 def user_profile(request):
     return render(request, 'user/profile.html')
