@@ -1,33 +1,45 @@
-{% extends 'base.html' %} {% block content %} {% if user.is_authenticated %}
-
+{% extends 'base.html' %} {% block content %}
+<style>
+  a {
+    color: rgb(183, 95, 60);
+  }
+</style>
+{% if user.is_authenticated %}
+<br />
 <h1>
   &nbsp;&nbsp;<u>{{park.name}}</u> &nbsp;&nbsp;<button
     type="button"
     class="btn btn-outline-secondary"
+    style="margin-bottom: 1rem"
   >
     <a href="{% url 'addreview' park.id %}">Add A Review</a>
   </button>
-  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">
+  &nbsp;&nbsp;<button
+    type="button"
+    class="btn btn-outline-secondary"
+    style="margin-bottom: 1rem"
+  >
     <a href="{% url 'addphoto' park.id %}">Add A Photo</a>
   </button>
 </h1>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
 <p></p>
-<p></p>
+<i class="fa-solid fa-list pe-2"></i>
 
+<i class="fa-solid fa-list pe-2"></i>
 <a href="{% url 'park_pictures' park.id %}"
-  >&nbsp;&nbsp;&nbsp;&nbsp;📸 View & Share photos from your visit to {{
-  park.name }} 📸</a
+  >&nbsp;📸 View photos shared by our users of {{ park.name }} 📸</a
 >
+<p></p>
+<hr />
 
-<hr />
-&nbsp;&nbsp;&nbsp;&nbsp;
-<h4>What other users have to say about {{ park.name }}:</h4>
-<hr />
+<h5>&nbsp;&nbsp;&nbsp;&nbsp;What users have to say about {{ park.name }}:</h5>
+<i class="fa-solid fa-list pe-2"></i>
+
 {% for review in park.reviews_set.all %}
-<div class="card" style="width: 40rem; margin-bottom: 1rem">
+<div class="card" style="width: 40rem; margin-bottom: 1rem; margin-left: 1rem">
   <div class="card-body">
-    <h5 class="card-title">Star Rating: {{ review.rating }}</h5>
+    <h5 class="card-title">Rating: {{ review.rating }}</h5>
     <h6 class="card-subtitle mb-2 text-muted">{{ review.date }}</h6>
     <p class="card-text">
       <strong>{{ review.user }} said:</strong>&nbsp; {{ review.review}}
@@ -36,35 +48,38 @@
 </div>
 
 {% endfor %} {% else %}
+
 <br />
 <h1>
   &nbsp;&nbsp;<u>{{park.name}}</u> &nbsp;&nbsp;<button
     type="button"
     class="btn btn-outline-secondary"
+    style="margin-bottom: 1rem"
   >
     <a href="{% url 'login' %}?next={{ request.path }}"
-      >Log in to leave a review!</a
+      >Log in to leave a review and post photos!</a
     >
   </button>
 </h1>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
 <p></p>
-<p></p>
+<i class="fa-solid fa-list pe-2"></i>
 
+<i class="fa-solid fa-list pe-2"></i>
 <a href="{% url 'park_pictures' park.id %}"
-  >&nbsp;&nbsp;&nbsp;&nbsp;📸 View photos shared by our users of {{ park.name }}
-  📸</a
+  >&nbsp;📸 View photos shared by our users of {{ park.name }} 📸</a
 >
+<p></p>
+<hr />
 
-<hr />
-&nbsp;&nbsp;&nbsp;&nbsp;
-<h4>What other users have to say about {{ park.name }}:</h4>
-<hr />
+<h5>&nbsp;&nbsp;&nbsp;&nbsp;What users have to say about {{ park.name }}:</h5>
+<i class="fa-solid fa-list pe-2"></i>
+
 {% for review in park.reviews_set.all %}
-<div class="card" style="width: 40rem; margin-bottom: 1rem">
+<div class="card" style="width: 40rem; margin-bottom: 1rem; margin-left: 1rem">
   <div class="card-body">
-    <h5 class="card-title">Star Rating: {{ review.rating }}</h5>
+    <h5 class="card-title">Rating: {{ review.rating }}</h5>
     <h6 class="card-subtitle mb-2 text-muted">{{ review.date }}</h6>
     <p class="card-text">
       <strong>{{ review.user }} said:</strong>&nbsp; {{ review.review}}

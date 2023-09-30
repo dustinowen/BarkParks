@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    
     path('', views.home, name='home'),
 
     path('parks/', views.parks_index, name='parksindex'),
@@ -29,9 +30,5 @@ urlpatterns = [
     path('user/favorites/', views.favorites, name='favorites'),
 
     path('map/', views.map, name='map'),
-
-    path('upload/', views.upload_photo, name='uploadphoto'),
-
-
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

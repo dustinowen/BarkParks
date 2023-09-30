@@ -12,25 +12,21 @@
     height: auto;
     border-radius: 8px;
   }
+  h1 {
+    text-align: center;
+  }
+  .return {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    color: rgb(96, 96, 134);
+  }
 </style>
-{% if user.is_authenticated %}
-<h1>
-  &nbsp;&nbsp;<a href="{% url 'addphoto' park_id}"
-    ><button type="submit" class="btn btn-outline-secondary">
-      Upload your photos HERE
-    </button></a
-  >
-</h1>
 
-{% else %}
 <h1>
-  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">
-    <a href="{% url 'login' %}?next={{ request.path }}"
-      >Log in to post your photos!</a
-    >
-  </button>
+  <u>📸&nbsp;&nbsp;{{park.name}}&nbsp;&nbsp;📸</u>
 </h1>
-{% endif %}
+<br />
 
 <div class="picture-grid">
   {% for image in park.pictures_set.all %}
@@ -39,5 +35,13 @@
   </a>
   {% endfor %}
 </div>
+
+<p></p>
+<hr />
+<p></p>
+
+<a class="return" href="{% url 'park_details' park.id %}"
+  >⮐ Return to {{park.name}}</a
+>
 
 {% endblock %}

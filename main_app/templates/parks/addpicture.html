@@ -32,7 +32,7 @@
   .photo-upload-form h2:after {
     content: "";
     height: 2px;
-    width: 12%;
+    width: 16%;
     background: #d4d4d4;
     position: absolute;
     top: 50%;
@@ -109,7 +109,7 @@
 <div class="photo-upload-form">
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <h2>Upload A Photo</h2>
+    <h2>Share A Photo</h2>
     <p class="hint-text">
       Share pictures from your visit to<br />
       {{ park.name }}
