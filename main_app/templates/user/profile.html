@@ -17,33 +17,29 @@
     <a href="{% url 'delete-review' id=review.id %}">delete review</a>
   </div>
 </div>
-{% endfor %} 
-
-
+{% endfor %}
 
 <style>
-    .picture-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      align-items: center;
-      justify-content: center;
-    }
-    .picture-grid img {
-      width: 100%;
-      height: auto; 
-      border-radius: 8px; 
-    }
-  </style>
+  .picture-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+  .picture-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+</style>
 
 <div class="picture-grid">
-{% for image in user.pictures_set.all %}
-<a href="{{ image.image.url }}">
+  {% for image in user.pictures_set.all %}
+  <a href="{{ image.image.url }}">
     <img src="{{ image.image.url }}" />
   </a>
-{% endfor %}
+  {% endfor %}
 </div>
-
-
 
 {% endblock %}

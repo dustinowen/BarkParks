@@ -1,19 +1,27 @@
 {% extends 'base.html' %} {% block content %} {% if user.is_authenticated %}
 
-
-
 <h1>
-  &nbsp;&nbsp;<u>{{park.name}}</u>
-  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary"><a href="{% url 'addreview' park.id %}">Add A Review</a></button>
-  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary"><a href="{% url 'addphoto' park.id %}">Add A Photo</a></button>
+  &nbsp;&nbsp;<u>{{park.name}}</u> &nbsp;&nbsp;<button
+    type="button"
+    class="btn btn-outline-secondary"
+  >
+    <a href="{% url 'addreview' park.id %}">Add A Review</a>
+  </button>
+  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">
+    <a href="{% url 'addphoto' park.id %}">Add A Photo</a>
+  </button>
 </h1>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
 <p></p>
 <p></p>
 
-<a href="{% url 'park_pictures' park.id %}">&nbsp;&nbsp;&nbsp;&nbsp;📸 View & Share photos from your visit to {{ park.name }} 📸</a>
+<a href="{% url 'park_pictures' park.id %}"
+  >&nbsp;&nbsp;&nbsp;&nbsp;📸 View & Share photos from your visit to {{
+  park.name }} 📸</a
+>
 
-<hr />&nbsp;&nbsp;&nbsp;&nbsp;
+<hr />
+&nbsp;&nbsp;&nbsp;&nbsp;
 <h4>What other users have to say about {{ park.name }}:</h4>
 <hr />
 {% for review in park.reviews_set.all %}
@@ -27,23 +35,30 @@
   </div>
 </div>
 
-{% endfor %} 
-
-
-{% else %}
+{% endfor %} {% else %}
 <br />
 <h1>
-  &nbsp;&nbsp;<u>{{park.name}}</u>
-  &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary"><a href="{% url 'login' %}?next={{ request.path }}">Log in to leave a review!</a></button>
+  &nbsp;&nbsp;<u>{{park.name}}</u> &nbsp;&nbsp;<button
+    type="button"
+    class="btn btn-outline-secondary"
+  >
+    <a href="{% url 'login' %}?next={{ request.path }}"
+      >Log in to leave a review!</a
+    >
+  </button>
 </h1>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
 <p></p>
 <p></p>
 
-<a href="{% url 'park_pictures' park.id %}">&nbsp;&nbsp;&nbsp;&nbsp;📸 View photos shared by our users of {{ park.name }} 📸</a>
+<a href="{% url 'park_pictures' park.id %}"
+  >&nbsp;&nbsp;&nbsp;&nbsp;📸 View photos shared by our users of {{ park.name }}
+  📸</a
+>
 
-<hr />&nbsp;&nbsp;&nbsp;&nbsp;
+<hr />
+&nbsp;&nbsp;&nbsp;&nbsp;
 <h4>What other users have to say about {{ park.name }}:</h4>
 <hr />
 {% for review in park.reviews_set.all %}
@@ -56,7 +71,4 @@
     </p>
   </div>
 </div>
-{% endfor %} 
-{% endif %} 
-
-{% endblock %}
+{% endfor %} {% endif %} {% endblock %}

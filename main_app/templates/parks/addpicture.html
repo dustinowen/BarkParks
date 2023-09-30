@@ -111,10 +111,10 @@
     {% csrf_token %}
     <h2>Upload A Photo</h2>
     <p class="hint-text">
-      Share pictures from your visit to<br> {{ park.name }}
+      Share pictures from your visit to<br />
+      {{ park.name }}
       <img src="{% static 'imgs/photo.png' %}" />
     </p>
-    
 
     <div class="form-group">
       Image:
@@ -154,9 +154,8 @@
       />
     </div>
 
-    <input type="hidden" name="user" value="{{ user.id }}">
-    <input type="hidden" name="park" value="{{ park.id }}">
-        
+    <input type="hidden" name="user" value="{{ user.id }}" />
+    <input type="hidden" name="park" value="{{ park.id }}" />
 
     <div class="form-group">
       <button
@@ -169,7 +168,5 @@
     </div>
   </form>
 </div>
-
-
 
 {% endblock %}

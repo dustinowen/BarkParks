@@ -1,94 +1,94 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <style>
   #map {
-      height: 400px;
-      width: 700px;
-      margin: auto;
-    }
+    height: 400px;
+    width: 700px;
+    margin: auto;
+  }
 </style>
 
 <script>
-  function initMap(){
-      
-      //Created a timestamp for URL to fix browser cache (kept loading the same spot for me, had to hard refresh each time)
-      const timestamp = new Date().getTime();
+  function initMap() {
+    //Created a timestamp for URL to fix browser cache (kept loading the same spot for me, had to hard refresh each time)
+    const timestamp = new Date().getTime();
 
-      //Map options
-      const options = {
-          zoom: 11,
-          center: {lat:33.5971, lng: -117.6377},
-          // type: ['park'],
-          // keyword: 'dog'
+    //Map options
+    const options = {
+      zoom: 11,
+      center: { lat: 33.5971, lng: -117.6377 },
+      // type: ['park'],
+      // keyword: 'dog'
+    };
+
+    //New map
+    const map = new google.maps.Map(document.getElementById("map"), options);
+
+    //Adjust size of the marker so the dog icon is more visible
+    const markerIcon = {
+      url:
+        "data:image/svg+xml;charset=UTF-8," +
+        '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">' +
+        '<circle cx="20" cy="20" r="18" stroke="black" stroke-width="3" fill="red" />' +
+        "</svg>",
+      scaledSize: new google.maps.Size(100, 100),
+    };
+
+    //Adding dog icon to the map marker
+    const marker = new google.maps.Marker({
+      position: { lat: 33.5971, lng: -117.6377 },
+      map: map,
+      label: "🐶",
+    });
+
+    //Adding info for the marker
+    const infoWindow = new google.maps.InfoWindow({
+      content: "Dog Park",
+    });
+
+    // Listener to display info
+    marker.addListener("click", function () {
+      infoWindow.open(map, marker);
+    });
+
+    //Set map query to 'dog park'
+    let request = {
+      type: ["park"],
+      keyword: "dog",
+    };
+
+    const service = new google.maps.places.PlacesService(map);
+
+    service.findPlaceFromQuery(request, function (results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (let i = 0; i < results.length; i++) {
+          const place = results[i];
+          const marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location,
+          });
+        }
       }
-
-      //New map
-      const map = new google.maps.Map(document.getElementById('map'), options)
-
-      //Adjust size of the marker so the dog icon is more visible
-      const markerIcon = {
-                  url: 'data:image/svg+xml;charset=UTF-8,' +
-                      '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">' +
-                          '<circle cx="20" cy="20" r="18" stroke="black" stroke-width="3" fill="red" />' +
-                      '</svg>',
-                  scaledSize: new google.maps.Size(100, 100)
-              };
-
-      //Adding dog icon to the map marker
-      const marker = new google.maps.Marker({
-          position:{lat:33.5971,lng:-117.6377},
-          map:map,
-          label: '🐶',
-      })
-
-      //Adding info for the marker
-      const infoWindow = new google.maps.InfoWindow({
-          content:'Dog Park'
-      })
-
-      // Listener to display info
-      marker.addListener('click', function(){
-          infoWindow.open(map, marker);
-      })
-
-      //Set map query to 'dog park'
-      let request = {
-          type: ['park'],
-          keyword: 'dog'
-      };
-
-      const service = new google.maps.places.PlacesService(map)
-
-      service.findPlaceFromQuery(request, function(results, status){
-          if (status === google.maps.places.PlacesServiceStatus.OK){
-              for (let i=0; i<results.length; i++){
-                  const place = results[i]
-                  const marker = new google.maps.Marker({
-                      map:map,
-                      position: place.geometry.location,
-                  })
-              }
-          }
-      })
+    });
   }
-
 </script>
 
-<script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&libraries=places&callback=initMap"></script> 
-
+<script
+  async
+  defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&libraries=places&callback=initMap"
+></script>
 
 <!--  *** HTML CODE BELOW ***  -->
 
-<div id="map">Map</div><br>
+<div id="map">Map</div>
+<br />
 
 <ul>
-{% for park in parks %}
+  {% for park in parks %}
 
- <li><a href="{% url 'park_details' park.id %}">{{ park.name }}</a></li><p>
-
-{% endfor %}
+  <li><a href="{% url 'park_details' park.id %}">{{ park.name }}</a></li>
+  <p>{% endfor %}</p>
 </ul>
 
 {% endblock %}

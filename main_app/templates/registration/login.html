@@ -100,18 +100,26 @@
     border-radius: 10px;
     justify-self: center;
   }
-  .invalid-text{
+  .invalid-text {
     margin-top: 20px;
     text-align: center;
   }
 </style>
 
 <div class="login-form">
-  <form action="{% url 'user_login' %}?next={{ request.path }}" class="" method="POST">
+  <form
+    action="{% url 'user_login' %}?next={{ request.path }}"
+    class=""
+    method="POST"
+  >
     {% csrf_token %}
 
     <h2>Let's Play!</h2>
-    <p class="hint-text">Enter your username and password.<img src="{% static 'imgs/login.jpeg' %}" /></p>
+    <p class="hint-text">
+      Enter your username and password.<img
+        src="{% static 'imgs/login.jpeg' %}"
+      />
+    </p>
 
     <div class="form-group">
       <input
@@ -146,7 +154,9 @@
       </button>
       <input type="hidden" name="next" value="{{ request.GET.next }}" />
       {% if form.errors %}
-      <p class="invalid-text">Your username and password did not match. Please try again.</p>
+      <p class="invalid-text">
+        Your username and password did not match. Please try again.
+      </p>
       {% endif %}
     </div>
   </form>
