@@ -22,3 +22,21 @@ In development...
 * Market place for dog products
 * Suggested visit times based on desired business levels (i.e. quiet, moderate, busy)
 * Connection to local resources (shelters/adoption, clinics, etc)
+
+
+## Credits
+
+<br>
+**Third Party References and Tutorials used include:** 
+<br>
+
+CSS Styling : https://getbootstrap.com/
+
+Django Reference & Debugging: https://www.djangoproject.com/
+
+Django Reference & Debugging: https://www.youtube.com/@NetNinja
+
+Google Maps Platform Documentation: https://developers.google.com/maps/documentation
+
+Location Saving Functionality (XMLHttpRequest): https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+
