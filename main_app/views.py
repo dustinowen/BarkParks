@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from .models import DogParks, Reviews, Pictures
-from .forms import ReviewForm, ImageForm
+from .forms import ReviewForm, ImageForm, AddParkForm
 
 def home(request):
     return render(request, 'home.html')
@@ -13,38 +13,18 @@ def parks_index(request):
         'parks': DogParks.objects.all()
     })
 
+def add_park(request):
+    park_form=AddParkForm()
+    if request.method == 'POST':
+        park_form = AddParkForm(request.POST)
+        if park_form.is_valid():
+            park_form.save()
+            return redirect('parksindex')
+    return render(request, 'parks/new.html', {'park_form': park_form })
+    
 def parks_detail(request, park_id):
     park = DogParks.objects.get(id=park_id)
     return render(request, 'parks/details.html', { 'park': park })
-
-def park_pictures(request, park_id):
-    park = DogParks.objects.get(id=park_id)
-    return render(request, 'parks/pictures.html', { 'park': park })
-
-def user_signup(request):
-    if request.method =='POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('/')
-    else:
-        form = UserCreationForm
-    return render(request, 'registration/signup.html', {'form': form})
-
-def user_login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data = request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            if 'next' in request.POST:
-                return redirect (request.POST.get('next'))
-            else:
-                return redirect('user_profile')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'registration/login.html', { 'form': form })
 
 def add_review(request, park_id):
     park= DogParks.objects.get(id=park_id)
@@ -65,19 +45,9 @@ def delete_review(request, id):
     review.delete()
     return redirect('user_profile')
 
-def delete_picture(request, id):
-    picture = Pictures.objects.get(id=id)
-    picture.delete()
-    return redirect('user_profile')
-
-def map(request):
-    return render(request, 'map/index.html')
-
-def favorites(request):
-    return render(request, 'user/favorites.html')
-
-def user_profile(request):
-    return render(request, 'user/profile.html')
+def park_pictures(request, park_id):
+    park = DogParks.objects.get(id=park_id)
+    return render(request, 'parks/pictures.html', { 'park': park })
 
 def add_photo(request, park_id):
     park = DogParks.objects.get(id=park_id)
@@ -97,3 +67,39 @@ def add_photo(request, park_id):
     else:
         form = ImageForm()
     return render(request, 'parks/addpicture.html', {'form': form, 'park': park})
+
+def delete_picture(request, id):
+    picture = Pictures.objects.get(id=id)
+    picture.delete()
+    return redirect('user_profile')
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data = request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            if 'next' in request.POST:
+                return redirect (request.POST.get('next'))
+            else:
+                return redirect('user_profile')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', { 'form': form })
+
+def user_signup(request):
+    if request.method =='POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')
+    else:
+        form = UserCreationForm
+    return render(request, 'registration/signup.html', {'form': form})
+
+def user_profile(request):
+    return render(request, 'user/profile.html')
+
+def map(request):
+    return render(request, 'map/index.html')

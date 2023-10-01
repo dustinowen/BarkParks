@@ -16,8 +16,8 @@ class DogParks(models.Model):
     address = models.CharField(max_length=100)
     hours = models.CharField(max_length=100, blank=True)
 
-    lat = models.DecimalField(max_digits=8, decimal_places=3)
-    long = models.DecimalField(max_digits=8, decimal_places=3)
+    lat = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
+    long = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
 
     def __str__(self):
         return self.name
