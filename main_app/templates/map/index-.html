@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!-- 
+
+    CODE TO GO WITH JS FILES -- EVENTUALLY GET THIS LOOPED COMPLETED SO THAT THE SEARCH FUNCTION IS ACTIVE
+
+    FROM THERE, SAVE RESULTS AS A DOG PARK ON BARK PARKS
+
+-->
+
+
+<section id="search">
+    <h1>What city?</h1>
+    <!-- example search function  -->
+    <form id="search-form" onsubmit="return false">
+        <input type="text" id="search-input" placeholder="Enter City Name">
+        <input type="submit" id="submit-button" value="Search">
+    </form>
+</div>
+</section>
+
+
+<section class="results-container">
+
+    <div id="results-cards">
+        <h2>Search Results</h2>
+
+        <button id="hider" value="results">Show Search History</button>
+        <div id="card-container"></div>
+        <div id="saved-cities"></div>
+    </div>
+   
+    <div id="map">Map</div>
+
+</section>
+
+
+<script src="{% static 'js/geocode.js' %}"></script>
+<script src="{% static 'js/search.js' %}"></script>
+<!-- <script src="{% static 'js/map.js' %}"></script> -->
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&libraries=places&callback=initMap"></script>
+
+{% endblock %}

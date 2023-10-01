@@ -8,13 +8,9 @@ class ReviewForm(ModelForm):
     model = Reviews
     fields = ['date', 'rating', 'review']
 
-class UserForm(ModelForm):
-  pass
-
-class UserCreationForm(ModelForm):
-  pass
-
 class ImageForm(ModelForm):
     class Meta:
       model = Pictures
       fields = ['user', 'park', 'image', 'description', 'date' ]
+
+

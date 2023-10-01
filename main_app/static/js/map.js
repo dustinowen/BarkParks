@@ -1,9 +1,10 @@
-import './geocode.js'
-
 function initMap() {
 
     map = new google.maps.Map(document.getElementById("map"), {
-    center: { latitude, longitude },
+        center: { 
+            lat: latitude,
+            lng: longitude
+     },
     zoom: 10
     });
     getResults(location);
@@ -39,7 +40,7 @@ function callback(results, status) {
             
             //disperse results over created areas
             res_box.setAttribute("class", "card")
-            cardContainer.append(res_box)
+            boxContainer.append(res_box)
             res_box.append(name)
             res_box.append(address)
 
