@@ -42,3 +42,5 @@ Location Saving Functionality (XMLHttpRequest): https://developer.mozilla.org/en
 
 AJAX Reference/Tutorial: https://www.youtube.com/watch?v=rjmtYkRK1nM
 
+CSS/JS Modal Implementation: https://www.w3schools.com/howto/howto_css_modals.asp
+

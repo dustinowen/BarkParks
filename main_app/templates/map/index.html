@@ -18,6 +18,31 @@
             margin-top: 1rem;
             margin-right: 10px;
         }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            text-align: center;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
     </style>
 
 
@@ -30,6 +55,15 @@
     
     <div id="map"></div>
     <div id="result"></div>
+
+
+
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div id="modalContent"></div>
+            <span class="close" onclick="closeModal()"><button type="button" class="btn btn-secondary">Close</button></span>
+        </div>
+    </div>
     
 <script>
     document.getElementById('place-form').addEventListener('submit', function (event) {
@@ -102,22 +136,6 @@
         }
     }
 
-    // function saveDogPark(name, address) {
-        
-    //     // Send AJAX POST request to Django view to save park data
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.open('POST', '/save_dog_park/', true);
-    //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //     xhr.onreadystatechange = function () {
-    //         if (xhr.readyState === 4 && xhr.status === 200) {
-    //             console.log('Park data saved successfully!');
-    //         }
-    //     };
-
-    //     var data = 'park_name=' + encodeURIComponent(name) + '&park_address=' + encodeURIComponent(address);
-    //     xhr.send(data);
-    // }
-
     function saveDogPark(name, address) {
     // Send AJAX POST request to Django view to save dog park data
     var xhr = new XMLHttpRequest();
@@ -128,11 +146,11 @@
             var response = JSON.parse(xhr.responseText);
 
             if (response.status === 'success') {
-                // Display a success alert
-                alert('Park added to User Saved Parks! You can also see all your saved parks on your User Profile.');
+                // Display a success popup with my message
+                openModal("🐶 Park added to 'User Saved Parks'! 🐶<br> Note: You can see all the parks you have personally saved in the 'Your Saved Parks' tab.");
             } else {
-                // Display an error alert with the received message
-                alert('Error: ' + response.message);
+                // Display an error popup with my message
+                openModal(response.message);
             }
         }
     };
@@ -141,6 +159,14 @@
     xhr.send(data);
 }
 
+    function openModal(content) {
+        document.getElementById('modalContent').innerHTML = content;
+        document.getElementById('confirmationModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('confirmationModal').style.display = 'none';
+    }
 
 </script>
     

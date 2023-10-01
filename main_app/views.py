@@ -33,7 +33,7 @@ def save_dog_park(request):
         #Was able to make duplicates created a conditional to prevent
         existing_park = DogParks.objects.filter(name = park_name, address = park_address).first()
         if existing_park:
-            return JsonResponse({'status': 'error', 'message': 'This park has already been saved by another user, you can find it in the User Saved Parks tab.'})
+            return JsonResponse({'status': 'error', 'message': "Looks like this park has already been saved by another user, you can find it in the 'User Saved Parks' tab."})
 
         dog_park = DogParks(name = park_name, address = park_address)
         dog_park.save()
