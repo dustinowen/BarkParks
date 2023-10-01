@@ -1,137 +1,107 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 
-<!--
-  
-  geocode map
-  
--->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&libraries=places"></script>
 
-<h1>map testing page</h1>
-
-  <style>
-    #map {
-      height: 300px;
-      width: 500px;
-    }
-  </style>
-
-
-  <script>
-
-    let map;
-    let marker;
-    let geocoder;
-    let responseDiv;
-    let response;
-
-    function initMap() {
-      map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 10,
-      // center: { lat: 33.6, lng: -117.6 },
-      mapTypeControl: false,
-    });
-
-      geocoder = new google.maps.Geocoder()
-
-      const inputText = document.getElementById("inputText")
-
-      inputText.type = "text"
-      inputText.placeholder = "Enter a location"
-
-      const submitButton = document.getElementById("submitButton")
-
-      submitButton.type = "button"
-      submitButton.value = "Geocode"
-      submitButton.classList.add("button", "button-primary")
-
-      const clearButton = document.getElementById("clearButton")
-
-      clearButton.type = "button"
-      clearButton.value = "Clear"
-      clearButton.classList.add("button", "button-secondary")
-
-      response = document.createElement("pre")
-      response.id = "response"
-      response.innerText = ""
-      responseDiv = document.createElement("div")
-      responseDiv.id = "response-container"
-      responseDiv.appendChild(response)
-
-      const instructionsElement = document.createElement("p")
-
-      instructionsElement.id = "instructions"
-      instructionsElement.innerHTML = "<strong>Instructions</strong>: Enter an address in the textbox to geocode or click on the map to reverse geocode."
-
-      marker = new google.maps.Marker({
-        map,
-      });
-
-      clear();
-    }
-
-    function clear() {
-      marker.setMap(null);
-      responseDiv.style.display = "none";
-    }
-
-    function geocode(request) {
-      clear();
-
-      geocoder
-        .geocode(request)
-        .then((result) => {
-          const { results } = result;
-
-          let latitude = results[0].geometry.location.lat();
-          let longitude = results[0].geometry.location.lng();
-
-          console.log("lat ", results[0].geometry.location.lat())
-          console.log("long ", results[0].geometry.location.lng())
-
-          console.log("Latitude:", latitude);
-          console.log("Longitude:", longitude);
-
-          map.setCenter(results[0].geometry.location);
-          marker.setPosition(results[0].geometry.location);
-          marker.setMap(map);
-          responseDiv.style.display = "block";
-
-          response.innerText = JSON.stringify(result, null, 2);
-          return results;
-        })
-        .catch((e) => {
-          alert("Geocode was not successful for the following reason: " + e);
-        });
-    }
-
-    window.initMap = initMap;
-
-    window.onload = function() {
-        geocode({ address: '25100 Felipe Road Mission Viejo CA' })
-        // geocode({ address: 'New York, NY' })
-      }
-
-  </script>
-
-  
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&callback=initMap" 
-    async defer></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 2rem;
+            margin-bottom: 2rem;;
+        }
+        #place-form {
+            margin-top: 3rem;
+            text-align: center;
+        }
+        #place-input {
+            margin-top: 1rem;
+            margin-right: 10px;
+        }
+    </style>
 
 
+    <form id="place-form">
+        <label for="place-input"><h2>Where do you need to find a dog park?:</h2></label><br>
+        <input type="text" id="place-input" placeholder="City Name" required style="width: 300px; height: 50px;">
+        <button type="submit" class="btn btn-dark btn-lg btn-block">🐶 Fetch! 🦴</button>
+    </form>
+
+    
     <div id="map"></div>
-
-    <br>
-
-    <div id="controls-container">
-
-      <input id="inputText" type="text" placeholder="Enter a location">
-
-      <input id="submitButton" type="button" value="Geocode" class="button button-primary">
-
-      <input id="clearButton" type="button" value="Clear" class="button button-secondary">
-
-    </div>
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('place-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+    
+            // Get the user input (city)
+            var cityInput = document.getElementById('place-input').value;
+    
+            // Preset query to 'dog park'
+            var query = 'dog park in ' + cityInput;
+    
+            // Create a PlacesService object
+            var placesService = new google.maps.places.PlacesService(document.createElement('div'));
+    
+            // Define the request object
+            var request = {
+                query: query,
+                fields: ['name', 'formatted_address', 'place_id']
+            };
+    
+            // Perform the Places API Text Search request
+            placesService.textSearch(request, function (results, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    // Display each result
+                    var resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = ''; // Clear previous results
+    
+                    for (var i = 0; i < results.length; i++) {
+                        resultDiv.innerHTML += '<p><strong>Name:</strong> ' + results[i].name + '</p>';
+                        resultDiv.innerHTML += '<p><strong>Address:</strong> ' + results[i].formatted_address + '</p>';
+                        resultDiv.innerHTML += '<hr>';
+                    }
+    
+                    // Display the results on the map
+                    displayResultsOnMap(results);
+                } else {
+                    // Handle error
+                    console.error('Error in Places API request:', status);
+                }
+            });
+        });
+    
+        function displayResultsOnMap(places) {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: places[0].geometry.location.lat(), lng: places[0].geometry.location.lng() },
+                zoom: 12
+            });
+    
+            for (var i = 0; i < places.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: places[i].geometry.location,
+                    map: map,
+                    label: "🐶",
+                    title: places[i].name
+                });
+    
+                // Add click event listener to the marker
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        // Create an info window with place information
+                        var infowindow = new google.maps.InfoWindow({
+                            content: '<p><strong>Name:</strong> ' + places[i].name + '</p>' +
+                                '<p><strong>Address:</strong> ' + places[i].formatted_address + '</p>'
+                        });
+    
+                        // Open the info window when the marker is clicked
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+        }
+    </script>
     
 
 {% endblock %}

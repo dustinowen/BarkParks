@@ -17,9 +17,8 @@ In development...
 
 
 ### Next Steps (Icebox Features):
-* Ability for users to add dog parks not found in database
+* Ability for users to save their favorite parks to their profile
 * User 'check-in' feature for park visits
-* Search option with search filters
+* Market place for dog products
 * Suggested visit times based on desired business levels (i.e. quiet, moderate, busy)
 * Connection to local resources (shelters/adoption, clinics, etc)
-* Market place for dog products

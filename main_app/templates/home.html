@@ -11,18 +11,41 @@
     }
 
     .container {
-        text-align: center;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 
     .container img {
-        max-width: 100%;
-        height: auto;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 45vh;
+        width: 100%;
+        /* margin-left: 100px; */
     }
+
 </style>
 
+
 <div class="container">
-    <img src="{% static 'imgs/park.jpg' %}" />
+    
+    <img src="{% static 'imgs/dogs_banner.png' %}" />
+
 </div>
+
+
+
+
+
+
+
+
+
 
 
 {% endblock %}

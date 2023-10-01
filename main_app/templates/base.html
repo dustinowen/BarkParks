@@ -38,9 +38,24 @@
 
           <ul class="sidebar-nav">
             <li class="sidebar-item">
+              <a href="{% url 'map' %}" class="sidebar-link">
+                <i class="fa-solid fa-list pe-2"></i>
+                Find A Park
+              </a>
+            </li>
+
+          <ul class="sidebar-nav">
+            <li class="sidebar-item">
               <a href="{% url 'parksindex' %}" class="sidebar-link">
                 <i class="fa-solid fa-list pe-2"></i>
-                All Parks
+                User Saved Parks
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a href="{% url 'addpark' %}" class="sidebar-link">
+                <i class="fa-solid fa-list pe-2"></i>
+                Add A Park
               </a>
             </li>
 
@@ -68,7 +83,7 @@
             <li class="sidebar-item">
               <a href="{% url 'parksindex' %}" class="sidebar-link">
                 <i class="fa-solid fa-list pe-2"></i>
-                All Parks
+                User Saved Parks
               </a>
             </li>
 

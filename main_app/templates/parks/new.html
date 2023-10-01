@@ -2,12 +2,199 @@
 {% load static %}
 {% block content %}
 
-<form action="" method='POST'>
-    {% csrf_token %}
-    {{ park_form.as_p }}
-    <input type="submit" value="Submit">
+<style>
+    .form-control {
+      height: 40px;
+      box-shadow: none;
+      color: #969fa4;
+    }
+    .form-control:focus {
+      border-color: #5cb85c;
+    }
+    .form-control,
+    .btn {
+      border-radius: 3px;
+    }
+    .addpark-form {
+      width: 400px;
+      margin: 0 auto;
+      padding: 30px 0;
+    }
+    .addpark-form h2 {
+      color: #636363;
+      margin: 0 0 15px;
+      position: relative;
+      text-align: center;
+    }
+    .addpark-form h2:before,
+    .addpark-form h2:after {
+      content: "";
+      height: 2px;
+      width: 25%;
+      background: #d4d4d4;
+      position: absolute;
+      top: 50%;
+      z-index: 2;
+    }
+    .addpark-form h2:before {
+      left: 0;
+    }
+    .addpark-form h2:after {
+      right: 0;
+    }
+    .addpark-form .hint-text {
+      color: #999;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .addpark-form form {
+      color: #999;
+      border-radius: 3px;
+      margin-bottom: 15px;
+      background: #f2f3f7;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+    }
+    .addpark-form .form-group {
+      margin-bottom: 20px;
+    }
+    .addpark-form input[type="checkbox"] {
+      margin-top: 3px;
+    }
+    .addpark-form .btn {
+      margin-top: 30px;
+      margin-left: 110px;
+      font-size: 16px;
+      font-weight: bold;
+      min-width: 140px;
+      border-radius: 10px;
+      outline: none !important;
+    }
+    .addpark-form .row div:first-child {
+      padding-right: 10px;
+    }
+    .addpark-form .row div:last-child {
+      padding-left: 10px;
+    }
+    .addpark-form a {
+      color: #463a40;
+      text-decoration: underline;
+    }
+    .addpark-form a:hover {
+      text-decoration: none;
+    }
+    .addpark-form form a {
+      color: #5cb85c;
+      text-decoration: none;
+    }
+    .addpark-form form a:hover {
+      text-decoration: underline;
+    }
+    .password-text {
+      color: #999;
+      margin-top: 30px;
+      text-align: center;
+      font-size: small;
+    }
+    img {
+      width: 300px;
+      margin-top: 10px;
+      border-radius: 10px;
+      justify-self: center;
+    }
+  </style>
+  
 
-</form>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&libraries=places"></script>
 
+<label for="autocomplete">Enter a location:</label>
+    <input type="text" id="autocomplete" placeholder="Enter a location"></div>
+
+     Display selected place details 
+    <h3>Selected Place Details:</h3>
+    <p id="place-details"></p>
+
+    <script>
+        // Initialize the autocomplete object
+        var autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
+
+        // Add event listener for place changes
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
+            displayPlaceDetails(place);
+        });
+
+        function displayPlaceDetails(place) {
+            let addressInput = document.getElementById('id_address');
+            addressInput.value = place.formatted_address;
+        }
+    </script>
+</div> -->
+
+
+
+  <div class="addpark-form">
+    <form action="" class="" method="POST">
+      {% csrf_token %}
+
+      <h2>Add A Park</h2>
+      <p class="hint-text">
+        Have a favorite park? Add it here!
+        <img src="{% static 'imgs/join.jpg' %}" />
+      </p>
+
+      <div class="form-group">
+        <input
+          type="text"
+          name="name"
+          maxlength="50"
+          autocapitalize="none"
+          autocomplete="name"
+          autofocus
+          required
+          id="id_name"
+          class="form-control"
+          placeholder="Park Name"
+        />
+      </div>
+      
+      <div class="form-group">
+        <input
+          type="text"
+          name="address"
+          autocomplete="address"
+          maxlength="100"
+          required
+          id="id_address"
+          class="form-control"
+          placeholder="Address (Street, City, State, ZIP)"
+        />
+      </div>
+  
+      <div class="form-group">
+        <input
+          type="text"
+          name="hours"
+          autocomplete="hours"
+          maxlength="100"
+          required
+          id="id_hours"
+          class="form-control"
+          placeholder="Park Hours"
+        />
+      </div>
+  
+      <div class="form-group">
+        <button
+          type="submit"
+          class="btn btn-dark btn-lg btn-block"
+          value="Add Park"
+        >
+          Add This Park
+        </button>
+      </div>
+    </form>
+  </div>
+</form> 
 
 {% endblock %} 

@@ -1,0 +1,137 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!--
+  
+  geocode map
+  
+-->
+
+<h1>map testing page</h1>
+
+  <style>
+    #map {
+      height: 300px;
+      width: 500px;
+    }
+  </style>
+
+
+  <script>
+
+    let map;
+    let marker;
+    let geocoder;
+    let responseDiv;
+    let response;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 10,
+      // center: { lat: 33.6, lng: -117.6 },
+      mapTypeControl: false,
+    });
+
+      geocoder = new google.maps.Geocoder()
+
+      const inputText = document.getElementById("inputText")
+
+      inputText.type = "text"
+      inputText.placeholder = "Enter a location"
+
+      const submitButton = document.getElementById("submitButton")
+
+      submitButton.type = "button"
+      submitButton.value = "Geocode"
+      submitButton.classList.add("button", "button-primary")
+
+      const clearButton = document.getElementById("clearButton")
+
+      clearButton.type = "button"
+      clearButton.value = "Clear"
+      clearButton.classList.add("button", "button-secondary")
+
+      response = document.createElement("pre")
+      response.id = "response"
+      response.innerText = ""
+      responseDiv = document.createElement("div")
+      responseDiv.id = "response-container"
+      responseDiv.appendChild(response)
+
+      const instructionsElement = document.createElement("p")
+
+      instructionsElement.id = "instructions"
+      instructionsElement.innerHTML = "<strong>Instructions</strong>: Enter an address in the textbox to geocode or click on the map to reverse geocode."
+
+      marker = new google.maps.Marker({
+        map,
+      });
+
+      clear();
+    }
+
+    function clear() {
+      marker.setMap(null);
+      responseDiv.style.display = "none";
+    }
+
+    function geocode(request) {
+      clear();
+
+      geocoder
+        .geocode(request)
+        .then((result) => {
+          const { results } = result;
+
+          let latitude = results[0].geometry.location.lat();
+          let longitude = results[0].geometry.location.lng();
+
+          console.log("lat ", results[0].geometry.location.lat())
+          console.log("long ", results[0].geometry.location.lng())
+
+          console.log("Latitude:", latitude);
+          console.log("Longitude:", longitude);
+
+          map.setCenter(results[0].geometry.location);
+          marker.setPosition(results[0].geometry.location);
+          marker.setMap(map);
+          responseDiv.style.display = "block";
+
+          response.innerText = JSON.stringify(result, null, 2);
+          return results;
+        })
+        .catch((e) => {
+          alert("Geocode was not successful for the following reason: " + e);
+        });
+    }
+
+    window.initMap = initMap;
+
+    window.onload = function() {
+        geocode({ address: '25100 Felipe Road Mission Viejo CA' })
+        // geocode({ address: 'New York, NY' })
+      }
+
+  </script>
+
+  
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&callback=initMap" 
+    async defer></script>
+
+
+    <div id="map"></div>
+
+    <br>
+
+    <div id="controls-container">
+
+      <input id="inputText" type="text" placeholder="Enter a location">
+
+      <input id="submitButton" type="button" value="Geocode" class="button button-primary">
+
+      <input id="clearButton" type="button" value="Clear" class="button button-secondary">
+
+    </div>
+    
+
+{% endblock %}

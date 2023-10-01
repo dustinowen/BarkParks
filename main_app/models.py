@@ -22,6 +22,9 @@ class DogParks(models.Model):
     def __str__(self):
         return self.name
     
+    class Meta:
+        ordering = ['name']
+    
 class Reviews(models.Model):
     date = models.DateField('Review Date')
     rating = models.IntegerField('User Rating',
