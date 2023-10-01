@@ -40,3 +40,5 @@ Google Maps Platform Documentation: https://developers.google.com/maps/documenta
 
 Location Saving Functionality (XMLHttpRequest): https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
 
+AJAX Reference/Tutorial: https://www.youtube.com/watch?v=rjmtYkRK1nM
+

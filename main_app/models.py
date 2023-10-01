@@ -12,8 +12,8 @@ RATINGS = (
 )
 
 class DogParks(models.Model):
-    name = models.CharField(max_length=50)
-    address = models.CharField(max_length=100)
+    name = models.CharField(max_length=50, unique=True)
+    address = models.CharField(max_length=100, unique=True)
     hours = models.CharField(max_length=100, blank=True)
 
     lat = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)

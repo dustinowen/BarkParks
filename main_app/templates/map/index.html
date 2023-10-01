@@ -31,77 +31,118 @@
     <div id="map"></div>
     <div id="result"></div>
     
-    <script>
-        document.getElementById('place-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-    
-            // Get the user input (city)
-            var cityInput = document.getElementById('place-input').value;
-    
-            // Preset query to 'dog park'
-            var query = 'dog park in ' + cityInput;
-    
-            // Create a PlacesService object
-            var placesService = new google.maps.places.PlacesService(document.createElement('div'));
-    
-            // Define the request object
-            var request = {
-                query: query,
-                fields: ['name', 'formatted_address', 'place_id']
-            };
-    
-            // Perform the Places API Text Search request
-            placesService.textSearch(request, function (results, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    // Display each result
-                    var resultDiv = document.getElementById('result');
-                    resultDiv.innerHTML = ''; // Clear previous results
-    
-                    for (var i = 0; i < results.length; i++) {
-                        resultDiv.innerHTML += '<p><strong>Name:</strong> ' + results[i].name + '</p>';
-                        resultDiv.innerHTML += '<p><strong>Address:</strong> ' + results[i].formatted_address + '</p>';
-                        resultDiv.innerHTML += '<hr>';
-                    }
-    
-                    // Display the results on the map
-                    displayResultsOnMap(results);
-                } else {
-                    // Handle error
-                    console.error('Error in Places API request:', status);
+<script>
+    document.getElementById('place-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Get the user input (city)
+        var cityInput = document.getElementById('place-input').value;
+
+        // Preset query to 'dog park'
+        var query = 'dog park in ' + cityInput;
+
+        // Create a PlacesService object
+        var placesService = new google.maps.places.PlacesService(document.createElement('div'));
+
+        // Define the request object
+        var request = {
+            query: query,
+            fields: ['name', 'formatted_address', 'place_id']
+        };
+
+        // Perform the Places API Text Search request
+        placesService.textSearch(request, function (results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                // Display each result
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = ''; // Clear previous results
+
+                for (var i = 0; i < results.length; i++) {
+                    resultDiv.innerHTML += '<p><strong>Name:</strong> ' + results[i].name + '</p>';
+                    resultDiv.innerHTML += '<p><strong>Address:</strong> ' + results[i].formatted_address + '</p>';
+                    resultDiv.innerHTML += '<hr>';
                 }
-            });
+
+                // Display the results on the map
+                displayResultsOnMap(results);
+            } else {
+                // Handle error
+                console.error('Error in Places API request:', status);
+            }
         });
-    
-        function displayResultsOnMap(places) {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: places[0].geometry.location.lat(), lng: places[0].geometry.location.lng() },
-                zoom: 12
+    });
+
+    function displayResultsOnMap(places) {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: places[0].geometry.location.lat(), lng: places[0].geometry.location.lng() },
+            zoom: 12
+        });
+
+        for (var i = 0; i < places.length; i++) {
+            var marker = new google.maps.Marker({
+                position: places[i].geometry.location,
+                map: map,
+                label: "🐶",
+                title: places[i].name
             });
-    
-            for (var i = 0; i < places.length; i++) {
-                var marker = new google.maps.Marker({
-                    position: places[i].geometry.location,
-                    map: map,
-                    label: "🐶",
-                    title: places[i].name
-                });
-    
-                // Add click event listener to the marker
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                        // Create an info window with place information
-                        var infowindow = new google.maps.InfoWindow({
-                            content: '<p><strong>Name:</strong> ' + places[i].name + '</p>' +
-                                '<p><strong>Address:</strong> ' + places[i].formatted_address + '</p>'
-                        });
-    
-                        // Open the info window when the marker is clicked
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));
+
+            // Add click event listener to the marker
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    // Create an info window with place information
+                    var infowindow = new google.maps.InfoWindow({
+                        content: '<p><strong>Name:</strong> ' + places[i].name + '</p>' +
+                            '<p><strong>Address:</strong> ' + places[i].formatted_address + '</p>' + '<button onclick="saveDogPark(\'' + places[i].name + '\', \'' + places[i].formatted_address + '\')">Add to User Saved Parks</button>'
+                    });
+
+                    // Open the info window when the marker is clicked
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+    }
+
+    // function saveDogPark(name, address) {
+        
+    //     // Send AJAX POST request to Django view to save park data
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open('POST', '/save_dog_park/', true);
+    //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    //     xhr.onreadystatechange = function () {
+    //         if (xhr.readyState === 4 && xhr.status === 200) {
+    //             console.log('Park data saved successfully!');
+    //         }
+    //     };
+
+    //     var data = 'park_name=' + encodeURIComponent(name) + '&park_address=' + encodeURIComponent(address);
+    //     xhr.send(data);
+    // }
+
+    function saveDogPark(name, address) {
+    // Send AJAX POST request to Django view to save dog park data
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/save_dog_park/', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            var response = JSON.parse(xhr.responseText);
+
+            if (response.status === 'success') {
+                // Display a success alert
+                alert('Park added to User Saved Parks! You can also see all your saved parks on your User Profile.');
+            } else {
+                // Display an error alert with the received message
+                alert('Error: ' + response.message);
             }
         }
-    </script>
+    };
+
+    var data = 'park_name=' + encodeURIComponent(name) + '&park_address=' + encodeURIComponent(address);
+    xhr.send(data);
+}
+
+
+</script>
     
 
 {% endblock %}

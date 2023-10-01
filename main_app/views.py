@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from .models import DogParks, Reviews, Pictures
@@ -21,7 +23,25 @@ def add_park(request):
             park_form.save()
             return redirect('parksindex')
     return render(request, 'parks/new.html', {'park_form': park_form })
+
+@csrf_exempt
+def save_dog_park(request):
+    if request.method == 'POST':
+        park_name = request.POST.get('park_name', '')
+        park_address = request.POST.get('park_address', '')
+
+        #Was able to make duplicates created a conditional to prevent
+        existing_park = DogParks.objects.filter(name = park_name, address = park_address).first()
+        if existing_park:
+            return JsonResponse({'status': 'error', 'message': 'This park has already been saved by another user, you can find it in the User Saved Parks tab.'})
+
+        dog_park = DogParks(name = park_name, address = park_address)
+        dog_park.save()
+
+        return JsonResponse({'status': 'success'})
     
+    return JsonResponse({'status': 'error'})
+
 def parks_detail(request, park_id):
     park = DogParks.objects.get(id=park_id)
     return render(request, 'parks/details.html', { 'park': park })
