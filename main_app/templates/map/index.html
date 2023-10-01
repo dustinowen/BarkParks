@@ -1,17 +1,20 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!--
+  
+  geocode map
+  
+-->
 
 <h1>map testing page</h1>
 
-
   <style>
     #map {
-      height: 400px;
-      width: 600px;
+      height: 300px;
+      width: 500px;
     }
-
   </style>
 
-<body>
 
   <script>
 
@@ -23,8 +26,8 @@
 
     function initMap() {
       map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 8,
-      center: { lat: 33.6, lng: -117.6 },
+      zoom: 10,
+      // center: { lat: 33.6, lng: -117.6 },
       mapTypeControl: false,
     });
 
@@ -63,16 +66,6 @@
         map,
       });
 
-      map.addListener("click", (e) => {
-        geocode({ location: e.latLng });
-        });
-        submitButton.addEventListener("click", () =>
-          geocode({ address: inputText.value }),
-        );
-        clearButton.addEventListener("click", () => {
-          clear();
-      });
-
       clear();
     }
 
@@ -89,10 +82,20 @@
         .then((result) => {
           const { results } = result;
 
+          let latitude = results[0].geometry.location.lat();
+          let longitude = results[0].geometry.location.lng();
+
+          console.log("lat ", results[0].geometry.location.lat())
+          console.log("long ", results[0].geometry.location.lng())
+
+          console.log("Latitude:", latitude);
+          console.log("Longitude:", longitude);
+
           map.setCenter(results[0].geometry.location);
           marker.setPosition(results[0].geometry.location);
           marker.setMap(map);
           responseDiv.style.display = "block";
+
           response.innerText = JSON.stringify(result, null, 2);
           return results;
         })
@@ -101,27 +104,34 @@
         });
     }
 
-
     window.initMap = initMap;
 
+    window.onload = function() {
+        geocode({ address: '25100 Felipe Road Mission Viejo CA' })
+        // geocode({ address: 'New York, NY' })
+      }
+
   </script>
+
+  
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&callback=initMap" 
     async defer></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&libraries=places&callback=initMap" async defer></script>
-
-
 
     <div id="map"></div>
+
     <br>
+
     <div id="controls-container">
+
       <input id="inputText" type="text" placeholder="Enter a location">
+
       <input id="submitButton" type="button" value="Geocode" class="button button-primary">
+
       <input id="clearButton" type="button" value="Clear" class="button button-secondary">
+
     </div>
     
-
-
 
 {% endblock %}

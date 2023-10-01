@@ -3,7 +3,94 @@
   a {
     color: rgb(183, 95, 60);
   }
+  #map {
+    height: 200px;
+    width: 600px;
+    margin-left: 50px;
+  }
+  .hours {
+    margin-left: 20px;
+  }
 </style>
+
+<script>
+
+let map;
+let marker;
+let geocoder;
+let responseDiv;
+let response;
+let parkAddress = "{{park.address}}"
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+  zoom: 13,
+  mapTypeControl: false,
+});
+
+  geocoder = new google.maps.Geocoder()
+
+response = document.createElement("pre")
+      response.id = "response"
+      response.innerText = ""
+      responseDiv = document.createElement("div")
+      responseDiv.id = "response-container"
+      responseDiv.appendChild(response)
+
+marker = new google.maps.Marker({
+        map,
+        label: "🐶",
+      });
+
+      clear();
+    }
+
+    function clear() {
+      marker.setMap(null);
+      responseDiv.style.display = "none";
+    }
+
+    function geocode(request) {
+      clear();
+
+      geocoder
+        .geocode(request)
+        .then((result) => {
+          const { results } = result;
+
+          let latitude = results[0].geometry.location.lat();
+          let longitude = results[0].geometry.location.lng();
+
+          console.log("lat ", results[0].geometry.location.lat())
+          console.log("long ", results[0].geometry.location.lng())
+
+          console.log("Latitude:", latitude);
+          console.log("Longitude:", longitude);
+
+          map.setCenter(results[0].geometry.location);
+          marker.setPosition(results[0].geometry.location);
+          marker.setMap(map);
+          responseDiv.style.display = "block";
+
+          response.innerText = JSON.stringify(result, null, 2);
+          return results;
+        })
+        .catch((e) => {
+          alert("Geocode was not successful for the following reason: " + e);
+        });
+    }
+
+    window.initMap = initMap;
+
+window.onload = function() {
+  geocode({ address: parkAddress })
+}
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&callback=initMap" async defer>
+</script>
+
 {% if user.is_authenticated %}
 <br />
 <h1>
@@ -22,15 +109,16 @@
     <a href="{% url 'addphoto' park.id %}">Add A Photo</a>
   </button>
 </h1>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
-<p></p>
-<i class="fa-solid fa-list pe-2"></i>
 
-<i class="fa-solid fa-list pe-2"></i>
-<a href="{% url 'park_pictures' park.id %}"
-  >&nbsp;📸 View photos shared by our users of {{ park.name }} 📸</a
->
+<div class="d-flex" style="margin-left: 22px;">Open {{park.hours}}</div>
 <p></p>
+<div id="map"></div>
+<p></p>
+<i class="fa-solid fa-list pe-2"></i>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'park_pictures' park.id %}"
+  >📸 View photos shared by our users of {{ park.name }} 📸</a
+>
+
 <hr />
 
 <h5>&nbsp;&nbsp;&nbsp;&nbsp;What users have to say about {{ park.name }}:</h5>
@@ -62,15 +150,15 @@
   </button>
 </h1>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open {{park.hours}}
+<div class="d-flex" style="margin-left: 22px;">Open {{park.hours}}</div>
+<p></p>
+<div id="map"></div>
 <p></p>
 <i class="fa-solid fa-list pe-2"></i>
-
-<i class="fa-solid fa-list pe-2"></i>
-<a href="{% url 'park_pictures' park.id %}"
-  >&nbsp;📸 View photos shared by our users of {{ park.name }} 📸</a
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'park_pictures' park.id %}"
+  >📸 View photos shared by our users of {{ park.name }} 📸</a
 >
-<p></p>
+
 <hr />
 
 <h5>&nbsp;&nbsp;&nbsp;&nbsp;What users have to say about {{ park.name }}:</h5>
