@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv
-load_dotenv()
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
