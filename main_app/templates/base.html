@@ -32,8 +32,6 @@
             <a href="{% url 'home' %}">Bark Parks<br>🐾🐶🐾</a>
           </div>
 
-
-
           {% if user.is_authenticated %}
 
           <ul class="sidebar-nav">
@@ -49,13 +47,6 @@
               <a href="{% url 'parksindex' %}" class="sidebar-link">
                 <i class="fa-solid fa-list pe-2"></i>
                 User Saved Parks
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a href="{% url 'addpark' %}" class="sidebar-link">
-                <i class="fa-solid fa-list pe-2"></i>
-                Your Saved Parks
               </a>
             </li>
 

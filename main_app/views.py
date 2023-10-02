@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from .models import DogParks, Reviews, Pictures
-from .forms import ReviewForm, ImageForm, AddParkForm
+from .forms import ReviewForm, ImageForm
 
 def home(request):
     return render(request, 'home.html')
@@ -14,15 +14,6 @@ def parks_index(request):
     return render(request, 'parks/index.html', {
         'parks': DogParks.objects.all()
     })
-
-def add_park(request):
-    park_form=AddParkForm()
-    if request.method == 'POST':
-        park_form = AddParkForm(request.POST)
-        if park_form.is_valid():
-            park_form.save()
-            return redirect('parksindex')
-    return render(request, 'parks/new.html', {'park_form': park_form })
 
 @csrf_exempt
 def save_dog_park(request):

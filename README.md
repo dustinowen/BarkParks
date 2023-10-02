@@ -25,22 +25,21 @@ In development...
 
 
 ## Credits
-
-<br>
 **Third Party References and Tutorials used include:** 
-<br>
 
-CSS Styling : https://getbootstrap.com/
+* CSS Styling : https://getbootstrap.com/
 
-Django Reference & Debugging: https://www.djangoproject.com/
+* Django Reference & Debugging: https://www.djangoproject.com/
 
-Django Reference & Debugging: https://www.youtube.com/@NetNinja
+* Django Reference & Debugging: https://www.youtube.com/@NetNinja
 
-Google Maps Platform Documentation: https://developers.google.com/maps/documentation
+* Google Maps Platform Documentation: https://developers.google.com/maps/documentation
 
-Location Saving Functionality (XMLHttpRequest): https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+* Location Saving Functionality (XMLHttpRequest): https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
 
-AJAX Reference/Tutorial: https://www.youtube.com/watch?v=rjmtYkRK1nM
+* AJAX Reference/Tutorial: https://www.youtube.com/watch?v=rjmtYkRK1nM
 
-CSS/JS Modal Implementation: https://www.w3schools.com/howto/howto_css_modals.asp
+* jQuery Tutorial: https://www.w3schools.com/jquery/
+
+* CSS/JS Modal Implementation: https://www.w3schools.com/howto/howto_css_modals.asp
 

@@ -9,8 +9,6 @@ urlpatterns = [
 
     path('parks/', views.parks_index, name='parksindex'),
 
-    path('parks/new/', views.add_park, name='addpark'),
-
     path('save_dog_park/', views.save_dog_park, name='savedogpark'),
 
     path('parks/<int:park_id>/', views.parks_detail, name='park_details'),
