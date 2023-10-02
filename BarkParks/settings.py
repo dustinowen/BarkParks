@@ -130,3 +130,7 @@ GOOGLE_API_KEY = 'AIzaSyA1wGdqkqw-G5hsx9l7hwWWIu7a-NW8beA'
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+import django_heroku
+
+django_heroku.settings(locals())
