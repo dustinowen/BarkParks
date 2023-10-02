@@ -100,7 +100,26 @@
     border-radius: 10px;
     justify-self: center;
   }
+  .password-requirements {
+  max-width: 400px;
+  margin: 10px auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 5px;
+  text-align: center;
+}
+.password-text {
+  display: none;
+  list-style-type: none;
+  padding: 0;
+}
+.password-header {
+  cursor: pointer;
+  font-weight: bold;
+}
 </style>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <div class="signup-form">
   <form action="" class="" method="POST">
@@ -150,6 +169,19 @@
       />
     </div>
 
+    <div class="password-requirements">
+      <div class="password-header" id="password-header">Password Requirements</div>
+      <ul class="password-text" id="password-text">
+        <li>▻ Password is required</li>
+        <li>▻ 150 characters or fewer</li>
+        <li>▻ Letters, digits and @/./+/-/_ only</li>
+        <li>▻ Must contain at least 8 characters</li>
+        <li>▻ Can’t be a commonly used password</li>
+        <li>▻ Can’t be entirely numeric</li>
+        <li>▻ Can’t be similar to other personal information</li>
+      </ul>
+    </div>
+
     <div class="form-group">
       <button
         type="submit"
@@ -166,15 +198,26 @@
   </div>
 </div>
 
-<ul class="password-text">
-  <u>Password requirements:</u>
-  <li>Password is required</li>
-  <li>150 characters or fewer</li>
-  <li>Letters, digits and @/./+/-/_ only</li>
-  <li>Your password must contain at least 8 characters</li>
-  <li>Your password can’t be a commonly used password</li>
-  <li>Your password can’t be entirely numeric</li>
-  <li>Your password can’t be too similar to your other personal information</li>
-</ul>
+<script>
+  $(document).ready(function(){
+  $("#password-header").click(function(){
+    $("#password-text").slideToggle();
+  });
+});
+
+</script>
+
+<!-- <div class="password-requirements">
+  <div class="password-header" id="password-header">Password Requirements</div>
+  <ul class="password-text" id="password-text">
+    <li>Password is required</li>
+    <li>150 characters or fewer</li>
+    <li>Letters, digits and @/./+/-/_ only</li>
+    <li>Your password must contain at least 8 characters</li>
+    <li>Your password can’t be a commonly used password</li>
+    <li>Your password can’t be entirely numeric</li>
+    <li>Your password can’t be too similar to your other personal information</li>
+  </ul>
+</div> -->
 
 {% endblock %}

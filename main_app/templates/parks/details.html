@@ -124,7 +124,9 @@ window.onload = function() {
 <h5>&nbsp;&nbsp;&nbsp;&nbsp;What users have to say about {{ park.name }}:</h5>
 <i class="fa-solid fa-list pe-2"></i>
 
+
 {% for review in park.reviews_set.all %}
+
 <div class="card" style="width: 40rem; margin-bottom: 1rem; margin-left: 1rem">
   <div class="card-body">
     <h5 class="card-title">Rating: {{ review.rating }}</h5>

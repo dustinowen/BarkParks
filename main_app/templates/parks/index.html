@@ -9,11 +9,22 @@
   a {
     color: rgb(183, 95, 60);
   }
+  .index-titlebar h1 {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .index-titlebar h5 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
 </style>
 
 
 
 <!--  *** HTML CODE BELOW ***  -->
+<div class="index-titlebar"><h1><u>Parks Saved By Our Users</u></h1>
+<h5>(Sorted A-Z: Click a park name for more details!)</h5></div>
+<hr />
 
 <ul>
   {% for park in parks %}
@@ -22,7 +33,5 @@
   {{park.address}}</li>
   <p>{% endfor %}</p>
 </ul>
-
-<!-- <h5>&nbsp;&nbsp;&nbsp;&nbsp;Don't see your favorite park? <a href="{% url 'addpark' %}">ADD IT HERE</h5></a> -->
 
 {% endblock %}
