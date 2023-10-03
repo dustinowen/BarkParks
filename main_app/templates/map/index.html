@@ -1,171 +1,210 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places"></script>
-
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-            margin-top: 2rem;
-            margin-bottom: 2rem;;
-        }
-        #place-form {
-            margin-top: 3rem;
-            text-align: center;
-        }
-        #place-input {
-            margin-top: 1rem;
-            margin-right: 10px;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 50%;
-            text-align: center;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-    </style>
+<script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places"></script>
 
 
-    <form id="place-form">
-        <label for="place-input"><h2>Where do you need to find a dog park?:</h2></label><br>
-        <input type="text" id="place-input" placeholder="City Name" required style="width: 300px; height: 50px;">
-        <button type="submit" class="btn btn-dark btn-lg btn-block">🐶 Fetch! 🦴</button>
-    </form>
+<style>
+  #map {
+    height: 400px;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  #place-form {
+    margin-top: 3rem;
+    text-align: center;
+  }
+  #place-input {
+    margin-top: 1rem;
+    margin-right: 10px;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+  }
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+</style>
 
-    
-    <div id="map"></div>
-    <div id="result"></div>
-    <div id="confirmationModal" class="modal">
-        <div class="modal-content">
-            <div id="modalContent"></div>
-            <span class="close" onclick="closeModal()"><button type="button" class="btn btn-secondary">Close</button></span>
-        </div>
-    </div>
-    
+<form id="place-form">
+  <label for="place-input"
+    ><h2>Where do you need to find a dog park?:</h2></label
+  ><br />
+  <input
+    type="text"
+    id="place-input"
+    placeholder="City Name"
+    required
+    style="width: 300px; height: 50px"
+  />
+  <button type="submit" class="btn btn-dark btn-lg btn-block">
+    🐶 Fetch! 🦴
+  </button>
+</form>
+
+<div id="map"></div>
+<div id="result"></div>
+<div id="confirmationModal" class="modal">
+  <div class="modal-content">
+    <div id="modalContent"></div>
+    <span class="close" onclick="closeModal()"
+      ><button type="button" class="btn btn-secondary">Close</button></span
+    >
+  </div>
+</div>
+
 <script>
-    document.getElementById('place-form').addEventListener('submit', function (event) {
-        event.preventDefault();
+  document
+    .getElementById("place-form")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
 
-        // Get the user input (city)
-        var cityInput = document.getElementById('place-input').value;
+      // Get the user input (city)
+      var cityInput = document.getElementById("place-input").value;
 
-        // Preset query to 'dog park'
-        var query = 'dog park in ' + cityInput;
+      // Preset query to 'dog park'
+      var query = "dog park in " + cityInput;
 
-        // Create a PlacesService object
-        var placesService = new google.maps.places.PlacesService(document.createElement('div'));
+      // Create a PlacesService object
+      var placesService = new google.maps.places.PlacesService(
+        document.createElement("div")
+      );
 
-        // Define the request object
-        var request = {
-            query: query,
-            fields: ['name', 'formatted_address', 'place_id']
-        };
+      // Define the request object
+      var request = {
+        query: query,
+        fields: ["name", "formatted_address", "place_id"],
+      };
 
-        // Perform the Places API Text Search request
-        placesService.textSearch(request, function (results, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                // Display each result
-                var resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = ''; // Clear previous results
+      // Perform the Places API Text Search request
+      placesService.textSearch(request, function (results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          // Display each result
+          var resultDiv = document.getElementById("result");
+          resultDiv.innerHTML = ""; // Clear previous results
 
-                for (var i = 0; i < results.length; i++) {
-                    resultDiv.innerHTML += '<p><strong>Name:</strong> ' + results[i].name + '</p>';
-                    resultDiv.innerHTML += '<p><strong>Address:</strong> ' + results[i].formatted_address + '</p>';
-                    resultDiv.innerHTML += '<hr>';
-                }
+          for (var i = 0; i < results.length; i++) {
+            resultDiv.innerHTML +=
+              "<p><strong>Name:</strong> " + results[i].name + "</p>";
+            resultDiv.innerHTML +=
+              "<p><strong>Address:</strong> " +
+              results[i].formatted_address +
+              "</p>";
+            resultDiv.innerHTML += "<hr>";
+          }
 
-                // Display the results on the map
-                displayResultsOnMap(results);
-            } else {
-                // Handle error
-                console.error('Error in Places API request:', status);
-            }
-        });
+          // Display the results on the map
+          displayResultsOnMap(results);
+        } else {
+          // Handle error
+          console.error("Error in Places API request:", status);
+        }
+      });
     });
 
-    function displayResultsOnMap(places) {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: places[0].geometry.location.lat(), lng: places[0].geometry.location.lng() },
-            zoom: 12
-        });
+  function displayResultsOnMap(places) {
+    var map = new google.maps.Map(document.getElementById("map"), {
+      center: {
+        lat: places[0].geometry.location.lat(),
+        lng: places[0].geometry.location.lng(),
+      },
+      zoom: 12,
+    });
 
-        for (var i = 0; i < places.length; i++) {
-            var marker = new google.maps.Marker({
-                position: places[i].geometry.location,
-                map: map,
-                label: "🐶",
-                title: places[i].name
+    for (var i = 0; i < places.length; i++) {
+      var marker = new google.maps.Marker({
+        position: places[i].geometry.location,
+        map: map,
+        label: "🐶",
+        title: places[i].name,
+      });
+
+      // Add click event listener to the marker
+      google.maps.event.addListener(
+        marker,
+        "click",
+        (function (marker, i) {
+          return function () {
+            // Create an info window with place information
+            var infowindow = new google.maps.InfoWindow({
+              content:
+                "<p><strong>Name:</strong> " +
+                places[i].name +
+                "</p>" +
+                "<p><strong>Address:</strong> " +
+                places[i].formatted_address +
+                "</p>" +
+                "<button onclick=\"saveDogPark('" +
+                places[i].name +
+                "', '" +
+                places[i].formatted_address +
+                "')\">Add to User Saved Parks</button>",
             });
 
-            // Add click event listener to the marker
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                    // Create an info window with place information
-                    var infowindow = new google.maps.InfoWindow({
-                        content: '<p><strong>Name:</strong> ' + places[i].name + '</p>' +
-                            '<p><strong>Address:</strong> ' + places[i].formatted_address + '</p>' + '<button onclick="saveDogPark(\'' + places[i].name + '\', \'' + places[i].formatted_address + '\')">Add to User Saved Parks</button>'
-                    });
-
-                    // Open the info window when the marker is clicked
-                    infowindow.open(map, marker);
-                }
-            })(marker, i));
-        }
+            // Open the info window when the marker is clicked
+            infowindow.open(map, marker);
+          };
+        })(marker, i)
+      );
     }
+  }
 
-    function saveDogPark(name, address) {
+  function saveDogPark(name, address) {
     // Send AJAX POST request to Django view to save dog park data
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/save_dog_park/', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.open("POST", "/save_dog_park/", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            var response = JSON.parse(xhr.responseText);
+      if (xhr.readyState === 4) {
+        var response = JSON.parse(xhr.responseText);
 
-            if (response.status === 'success') {
-                // Display a success popup with my message
-                openModal("🐶 Park added to 'User Saved Parks'! 🐶<br> Note: You can see all the parks you have personally saved in the 'Your Saved Parks' tab.");
-            } else {
-                // Display an error popup with my message
-                openModal(response.message);
-            }
+        if (response.status === "success") {
+          // Display a success popup with my message
+          openModal(
+            "🐶 Park added to 'User Saved Parks'! 🐶<br> Note: You can see all the parks you have personally saved in the 'Your Saved Parks' tab."
+          );
+        } else {
+          // Display an error popup with my message
+          openModal(response.message);
         }
+      }
     };
 
-    var data = 'park_name=' + encodeURIComponent(name) + '&park_address=' + encodeURIComponent(address);
+    var data =
+      "park_name=" +
+      encodeURIComponent(name) +
+      "&park_address=" +
+      encodeURIComponent(address);
     xhr.send(data);
-}
+  }
 
-    function openModal(content) {
-        document.getElementById('modalContent').innerHTML = content;
-        document.getElementById('confirmationModal').style.display = 'block';
-    }
+  function openModal(content) {
+    document.getElementById("modalContent").innerHTML = content;
+    document.getElementById("confirmationModal").style.display = "block";
+  }
 
-    function closeModal() {
-        document.getElementById('confirmationModal').style.display = 'none';
-    }
-
+  function closeModal() {
+    document.getElementById("confirmationModal").style.display = "none";
+  }
 </script>
-    
 
 {% endblock %}
