@@ -7,8 +7,6 @@ from django.contrib.auth import login
 from .models import DogParks, Reviews, Pictures
 from .forms import ReviewForm, ImageForm
 from django.conf import settings
-from PIL import Image
-
 
 def home(request):
     return render(request, 'home.html')
