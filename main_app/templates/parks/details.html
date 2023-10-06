@@ -88,7 +88,9 @@ window.onload = function() {
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&callback=initMap" async defer>
+</script>
+
 
 {% if user.is_authenticated %}
 <br />
