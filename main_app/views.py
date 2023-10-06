@@ -36,11 +36,7 @@ def save_dog_park(request):
 
 def parks_detail(request, park_id):
     park = DogParks.objects.get(id=park_id)
-    context = {
-        'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
-        'park': park,
-    }
-    return render(request, 'parks/details.html', context)
+    return render(request, 'parks/details.html', {'park': park })
 
 def add_review(request, park_id):
     park= DogParks.objects.get(id=park_id)
@@ -118,7 +114,4 @@ def user_profile(request):
     return render(request, 'user/profile.html')
 
 def map(request):
-    context = {
-        'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
-    }
-    return render(request, 'map/index.html', context)
+    return render(request, 'map/index.html')
