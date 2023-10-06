@@ -3,9 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login
 from .models import DogParks, Reviews, Pictures
 from .forms import ReviewForm, ImageForm
+from django.conf import settings
+from PIL import Image
+
 
 def home(request):
     return render(request, 'home.html')
@@ -35,7 +38,11 @@ def save_dog_park(request):
 
 def parks_detail(request, park_id):
     park = DogParks.objects.get(id=park_id)
-    return render(request, 'parks/details.html', { 'park': park })
+    context = {
+        'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
+        'park': park,
+    }
+    return render(request, 'parks/details.html', context)
 
 def add_review(request, park_id):
     park= DogParks.objects.get(id=park_id)
@@ -113,4 +120,7 @@ def user_profile(request):
     return render(request, 'user/profile.html')
 
 def map(request):
-    return render(request, 'map/index.html')
+    context = {
+        'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
+    }
+    return render(request, 'map/index.html', context)
