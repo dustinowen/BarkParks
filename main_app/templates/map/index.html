@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-DvfRA9eInzf9OGuMV0PaumYHGeBrW-g&libraries=places"></script>
 
 <style>
@@ -107,13 +108,8 @@
             resultDiv.innerHTML +=
               "<p><strong>Address:</strong> " +
               results[i].formatted_address +
-              "</p>" +
-              "<button onclick=\"saveDogPark('" +
-              places[i].name +
-              "', '" +
-              places[i].formatted_address +
-              "')\">Save Park</button>" +
-              "<hr>";
+              "</p>";
+            resultDiv.innerHTML += "<hr>";
           }
 
           // Display the results on the map
