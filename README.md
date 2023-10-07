@@ -43,4 +43,3 @@ Application for pet parents looking for dog parks, either in their hometown or w
 * jQuery Tutorial: https://www.w3schools.com/jquery/
 
 * CSS/JS Modal Implementation: https://www.w3schools.com/howto/howto_css_modals.asp
-
