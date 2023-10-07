@@ -31,7 +31,6 @@ urlpatterns = [
 
     path('user/', views.user_profile, name='user_profile'),
 
-    #Map path is for testing only
     path('map/', views.map, name='map'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
