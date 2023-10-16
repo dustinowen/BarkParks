@@ -106,6 +106,7 @@
   }
 </style>
 
+
 <div class="photo-upload-form">
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -161,12 +162,22 @@
       <button 
         type="submit"
         class="btn btn-dark btn-lg btn-block"
-        value="Add Review"
+        value="Add Photo"
+        id="uploadButton"
       >
         Upload
       </button>
     </div>
   </form>
+
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', function() {
+      const uploadButton = document.getElementById('uploadButton')
+      uploadButton.innerHTML = 'Uploading...'
+      uploadButton.disabled = true
+    });
+  </script>
+
 </div>
 
 {% endblock %}
