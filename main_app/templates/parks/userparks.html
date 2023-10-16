@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    #map {
+      height: 400px;
+      width: 700px;
+      margin: auto;
+    }
+    a {
+      color: rgb(183, 95, 60);
+    }
+    .index-titlebar h1 {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .index-titlebar {
+      text-align: center;
+      margin-bottom: 1rem;
+      margin-top: 1rem;
+    }
+  </style>
+
+
+<div class="index-titlebar"><p>
+    <h2>🐶 Dog parks saved by {{user.get_username}} 🐶</h2>
+    <h6>(Sorted A-Z: Click a park name for more details!)</h6></div>
+    <hr />
+        {% for park in user_parks %}
+
+            <li><h4><a href="{% url 'park_details' park.id %}">▻&nbsp;{{ park.name }}</a></h4>
+                {{park.address}}</li>
+                <p>{% endfor %}</p>
+
+    </ul>
+{% endblock %}
