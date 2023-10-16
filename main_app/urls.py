@@ -31,6 +31,8 @@ urlpatterns = [
 
     path('user/', views.user_profile, name='user_profile'),
 
+    path('user/parks/', views.user_parks, name='user_parks'),
+
     path('map/', views.map, name='map'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -20,6 +20,7 @@
       href="{% static 'css/style.css' %}"
     />
 
+
     <title>Bark Parks ~ A Dog Park Finder</title>
   </head>
 
@@ -41,19 +42,27 @@
                 Find A Park
               </a>
             </li>
+            
+            <ul class="sidebar-nav">
+              <li class="sidebar-item">
+                <a href="{% url 'user_parks' %}" class="sidebar-link">
+                  <i class="fa-solid fa-list pe-2"></i>
+                  Your Saved Parks
+                </a>
+              </li>
+              
+              <li class="sidebar-item">
+                <a href="{% url 'user_profile' %}" class="sidebar-link">
+                  <i class="fa-solid fa-list pe-2"></i>
+                  User Profile
+                </a>
+              </li>
 
-          <ul class="sidebar-nav">
+            <ul class="sidebar-nav">
             <li class="sidebar-item">
               <a href="{% url 'parksindex' %}" class="sidebar-link">
                 <i class="fa-solid fa-list pe-2"></i>
-                User Saved Parks
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a href="{% url 'user_profile' %}" class="sidebar-link">
-                <i class="fa-solid fa-list pe-2"></i>
-                User Profile
+                All Bark Parks
               </a>
             </li>
 

@@ -22,13 +22,15 @@ def save_dog_park(request):
         park_name = request.POST.get('park_name', '')
         park_address = request.POST.get('park_address', '')
 
-        #Was able to make duplicates created a conditional to prevent
-        existing_park = DogParks.objects.filter(name = park_name, address = park_address).first()
+        existing_park = DogParks.objects.filter(address=park_address).first()
+
         if existing_park:
-            return JsonResponse({'status': 'error', 'message': "Looks like this park has already been saved by another user, you can find it in the 'User Saved Parks' tab."})
+            existing_park.users.add(request.user)
+            return JsonResponse({'status': 'success', 'message': 'Park saved!.'})
 
         dog_park = DogParks(name = park_name, address = park_address)
         dog_park.save()
+        dog_park.users.add(request.user)
 
         return JsonResponse({'status': 'success'})
     
@@ -37,6 +39,10 @@ def save_dog_park(request):
 def parks_detail(request, park_id):
     park = DogParks.objects.get(id=park_id)
     return render(request, 'parks/details.html', {'park': park })
+
+def user_parks(request):
+    saved_parks = request.user.saved_parks.all()
+    return render(request, 'parks/userparks.html', {'user_parks': saved_parks})
 
 def add_review(request, park_id):
     park= DogParks.objects.get(id=park_id)

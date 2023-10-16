@@ -96,3 +96,11 @@ a.sidebar-link:hover {
         width: auto;
     }
 }
+
+
+@media screen and (max-width: 768px) {
+    /* Hide the sidebar by default on smaller screens */
+    #sidebar {
+      display: none;
+    }
+}

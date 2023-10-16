@@ -14,14 +14,17 @@ class DogParks(models.Model):
     address = models.CharField(max_length=100, unique=True)
     hours = models.CharField(max_length=100, blank=True)
 
-    lat = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
-    long = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
+    users = models.ManyToManyField(User, related_name='saved_parks')
 
     def __str__(self):
         return self.name
     
     class Meta:
         ordering = ['name']
+
+    @classmethod
+    def parks_added_by_user(cls, user):
+        return cls.objects.filter(user=user)
     
 class Reviews(models.Model):
     date = models.DateField('Review Date')
